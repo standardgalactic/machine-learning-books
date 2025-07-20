@@ -1,0 +1,703 @@
+
+
+
+
+
+ Vital Introduction to Machine Learning with Python: 
+   
+  Best Practices to Improve and Optimize Machine Learning Systems and Algorithms 
+   
+ By Jon Stinkster 
+   
+
+
+
+
+
+
+
+
+
+
+  Copyright 2016 by Jon Stinkster - All rights reserved. 
+   
+ The follow eBook is reproduced below with the goal of providing information that is as accurate and reliable as possible. Regardless, purchasing this eBook can be seen as consent to the fact that both the publisher and the author of this book are in no way experts on the topics discussed within and that any recommendations or suggestions that are made herein are for entertainment purposes only. Professionals should be consulted as needed prior to undertaking any of the action endorsed herein. 
+   
+ This declaration is deemed fair and valid by both the American Bar Association and the Committee of Publishers Association and is legally binding throughout the United States.  
+   
+ Furthermore, the transmission, duplication or reproduction of any of the following work including specific information will be considered an illegal act irrespective of if it is done electronically or in print. This extends to creating a secondary or tertiary copy of the work or a recorded copy and is only allowed with express written consent from the Publisher. All additional right reserved. 
+   
+ The information in the following pages is broadly considered to be a truthful and accurate account of facts and as such any inattention, use or misuse of the information in question by the reader will render any resulting actions solely under their purview. There are no scenarios in which the publisher or the original author of this work can be in any fashion deemed liable for any hardship or damages that may befall them after undertaking information described herein.  
+   
+ Additionally, the information in the following pages is intended only for informational purposes and should thus be thought of as universal. As befitting its nature, it is presented without assurance regarding its prolonged validity or interim quality. Trademarks that are mentioned are done without written consent and can in no way be considered an endorsement from the trademark holder. 
+   
+   
+ Table of Contents 
+   
+ Introduction 
+ Chapter 1- Basic SQL Refresher 
+ Chapter 2- Python and SQL 
+ Chapter 3- Tip and Tricks on Improving Skills 
+ Chapter 4- Rules to Improve Skills 
+ Chapter 5- Common Mistakes and Pitfalls Typically Made 
+ Chapter 6- Dangerous Programming Mistakes 
+ Chapter 7- Helpful Resources  
+ Conclusion 
+ 
+
+
+
+
+
+
+
+
+
+
+ Introduction 
+   
+ As a follow up to the "Beginner's Guide on SQL" that I wrote previously, this book aims to build on that knowledge and allow for you to improve your skills. This book, rather than setting up and explaining the "how's and why's" surrounding Python and move more into you putting your knowledge and skills into practice. Although we will start with a basic refresher on SQL, we will quickly move into tips, tricks and rules to follow as you work on personal practices to optimize and improve your systems based learning and algorithms.  
+ It is my hope that this book will allow you to gain further experience in speaking the Python language to the SQL system. In order to properly code and speak with the computer, I advise that you allow yourself to keep a positive, detail oriented attitude that is willing to take time and make sure to double and triple check your work—especially if you are getting and error message. Computers do EXACTLY as they are told, which is an excellent thing to remember when you struggle with speaking to your computer in Python. A computer will not infer a guess as to what you are trying to tell it, simply tell you to go back and figure out what you are trying to say. 
+ Through reading this book and allowing yourself to gain more knowledge and insight into speaking Python, I hope you will gain more confidence in your abilities. I encourage you to read this book and use it as a guide when you start to take on your computer. By allowing yourself to try and make mistakes, you begin to learn and enhance your skills. Educating yourself and doing your homework will always serve you well when tackling any new project.  
+ Throughout the pages of this book, I reveal to the reader both the work that I believe in and the philosophy behind it. As coding and programming can become somewhat tedious and difficult, with the long hours of looking at and typing on a computer, it is important to have a reference guide that can bring you back to the basics. Although this book is not basic skills, we are building upon them to create databases and manage them, there are core ideas that should be used. I aim to provide you with a well-rounded exposure to issues of programing and coding. Along with this, I try to give fair and balanced examples of how both sides of an issue (like permissions) can create a problem if they are over or under used. Throughout this book, I would like to promote a sense of knowledgeable balance that can be utilized by you to make the best decisions in coding and programming.  
+ Towards the end of this book, I start to cover more of the darker side of potential internet attacks on your system. This is something that every person who uses a computer based system could potentially experience. The more people that seem to be using the internet, the more there seem to be different and new risks for users and creators alike. It is important to always stay alert and sharp as you venture deeper into the world of a computer system. Remind yourself to stay vigilant and alert to news and articles about trends in hacking or attacking and how malicious programs or viruses are spread. Although knowing everything is an impossible task no one should try to do, altering yourself and remaining as knowledgeable as possible will greatly help you with your coding and programming. Knowledge is most certainly power in any realm of thought and certainly holds true within the world of technology and computers.   
+ The greater and overall purpose of this book is to serve as a "how to guide" that allows you to open the book and be able to find knowledge to put to use. I hope that from the tips and tricks to the actual coding examples in other chapters, I have covered a variety of subjects and different coding examples. By the end of this book, it is my hope that you will have some new challenges to work on and master.   
+
+
+
+
+
+
+
+
+
+
+ Chapter 1- Basic SQL Refresher 
+   
+ If you have picked up this book in order to learn more about how to program, you are certainly reading the right book. The purpose of this book is to allow you to understand and practice methods that will help you to create your own management system from top to bottom. Knowing the basics of how SQL works in tandem with Python is something that will get you fairly far within the coding and programming community. Although you may have heard different terms, like Perl or C++, the SQL and Python are the best example of a fairly inclusive software that is free of some subtle nuances programmers learn with time. Being able to remember everything is not an ability anyone has (unless you have a photographic memory) so I hope you will always be able to use this book if you get lost about a basic principle that may have slipped your mind. 
+   
+ As you are reading this to learn new concepts and tricks, I don't want to drive you too crazy with what is a review; however, I also want to make sure that you understand and refresh your memory of some specifics.  This chapter should serve as a reminder of a lot of the content covered in my beginners guide to SQL. Within this chapter, I will try to include the most important and pertinent information that will be used to build upon in the rest of the book. For this refresher on the basics I will give a short history, explanation of the design of SQL and finally syntax synopsis.  
+   
+ History 
+ First of all, SQL is an acronym for Structured Query Language, a programming language that is designed for managing data in what is referred to as a relational database. SQL has been around since the 1970s and is still the most commonly used method for accessing databases today. The functions of SQL allow for users to read, change and manipulate data. It is most popular among both software development engineers as well as data analysts for three main reasons:  
+
+ it can store large amounts of data 
+ is easy to learn and understand   
+ it is easy to replicate and audit data within the system (much easier that spreadsheet programs 
+
+ The organization of the databases is a key feature that allow it to be easy to use. In order to open Python within SQL, one must first open up a connection on the SQL server, begin to send and receive commands and finally close the connection when you are finished. As was stated before, SQL is easy and fairly straight forward to use.  
+  For an example of how one may retrieve a table within the database—if you had a database called foodlovers and a table on chocolate_cake_sales, it would be easy to find within the system as it is saved as the straightforward "foodlovers.chocolate_cake_sales". The learning curve on this program, for the basics, is incredibly easy to get the hang of.  
+   
+ Design 
+ SQL is a relational database the run on a client/server system. In what is referred to as PostgreSQL, instead of using the term "server", it is referred to as the postmaster and preforms all of the interaction with the data. Within the terminology and systems, the client is representative of the programs that are used to make requests to either modify the database or read the server. A lot of people refer to SQL as the foundation of data analysis, as is used for cleaning, accessing and analyzing data stored in databases. It is considered to be easy to learn and used widely by large and small companies to solve challenging problems.  
+ I think a great way to summarize SQL and Python is that SQL is the rules of the language and Python is how you communicate those rules. SQL serves as a communication tool to tell a database information. Python is your ability to express your commands to the database and change, edit or add information.  
+ For an example of how one would connect and use SQL in Python3, we can follow the below basic model python connector: 
+ "sudo apt-get install python3-mysql.connector" 
+ As we can see from this above simple example of how to use Python-connector within Python3, once you get familiar with how to talk to the system, it is fairly straightforward to do so.  
+ Syntax 
+
+ Language Elements- Within SQL language, there are 6 different language elements- clauses, expressions, predicates, queries, and statements. Clauses serve as the action word component of statements and queries (like UPDATE or SET), expressions can produce either tables consisting of rows and columns of data or scalar values, predicates allow the ability to specify conditions that are to be used to evaluate, and finally, queries retrieve data based on certain criteria. Insignificant whitespace is generally ignored when using SQL, for a simpler way to format the SQL code to be the most readable.  
+
+
+ Operators- These are the major operators within SQL-- = or equal to, <> not equal to, > greater than, < less than, >= greater than or equal, <- less than or equal, BETWEEN stands for between and inclusive range, LIKE is the ability to match a character pattern, IN is equal to one of multiple potential values, IS or IS NOT comparing to missing data, IS NOT DISTICT FROM states it is equal to value or both are missing and finally AS that you can use to change a name when viewing results. These are not all of the operators, just ones that are used most frequently.  
+ Queries- A step in a more descriptive use of terminology than operators, queries aim to help a user describe data and leave the database in order to carry out planning, optimizing and performing the actual physical operations that can produce the desired result. SELECT, being the most complex statement in SQL, allows for a user to retrieve data from either one or more tables with some different addition descriptive terms. These terms being FROM, WHERE, GROUP BY, HAVING, ORDER BY and DISTINCT each to carry out a more specific and complex task.  
+ Data Manipulation- Building upon the previous commands used to get more complex results, data manipulation adds the ability to update, add or delete data. The terms you would input to use a data manipulation feature are DELETE, MERGE, UPDATE and INSERT—followed by whatever data or values you were trying to control. These are helpful for altering multiple variables and have more coding after the initial words listed above, just as with all the other key words/phrases we have spoken about so far.  
+ Transaction Controls- these can be described as terms that wrap around others to perform operations. These are terms like START TRANSACTION, SAVE TRANACTION, COMMIT and ROLLBACK. These help to tell the computer where to start and stop and what data follows them and needs to be acted upon.  
+ Data Definition- these are terms that manages index and table structure. These are terms such as CREATE, ALTER, RENAME, DROP and TRUNCATE.  
+ Data Types- These are categories that help the user to know what type of data type or types are within the column. These include character strings, bit strings, numbers and temporal (date and time related) data types.  
+ Data Control- Finally this type of syntax allows for ultimate user access to and the ability to manipulate data. It consists of two statements, GRANT and REVOKE. 
+
+ As these types of commands, hopefully, run back through your consciousness, hopefully you are able to recall how and why they are used in more detail. By this point, you have used them within your own coding practices and feel as though you have a firm grasp on, if not the different categories a term may fall into, you at least are able to tell what and how each one of them completes a given function. It is important to have a firm grasp on these basics before moving on to more complex coding and understanding of the Python language within SQL. In case you are feeling like you need more information on these to move forward, please check out my other book that is a beginner's guide to understanding these terms.  
+   
+
+
+
+
+
+
+
+
+
+
+ Chapter 2- Python and SQL 
+   
+ For this chapter in the book, I want to give you a literal description of how Python and SQL interact with each other; following that, I will give you some examples of what exactly that coding looks like within the software. I advise you to try and read through the entirety of the chapter before going back and analyzing each section. Sometimes having a good idea of the overall picture can allow for you to re-read and have a clearer understanding the next time around. Also remind yourself of the learning curve you have had with other things, especially the beginning steps of this process.  
+ Hopefully, by this time, you are incredibly comfortable and able to understand and utilize your system to do the basic functions. Being able to understand the subtle differences between what SQL controls and how Python controls it is something that may take time at first. You also may not initially see how it is two separate processes working together to create a functioning database or system. Remember that SQL is the rules on how to get things done and Python is the way you word things (the language) to be able to tell the system what you need or want to happen.  
+ Written Description 
+ For this portion, I will explain the process and how an interaction takes place between the infrastructure (SQL software) and the language used (Python), which is really quite simple sounding.  The goal of a successful interaction in the software is that you get an outcome of what you were attempting with your instructions (Python coding). The concept of what you will start to build during this more advanced mode of computer problem solving and interaction is built upon the same as the basics.  
+ Within the SQL system and Python coding, you are creating a place to store and present access to the data in a useful way—AKA you are creating a database. Databases are considered high level applications that allow you to carry out this function. The structure of the database (SQL) is a way to store data in a fast and reliable way. Once you are able to understand how to create and store data within the structure you are on the road to a working and functional database for yourself or your user(s).  
+ It is always important to teach yourself all of the possible basic principles that can assist you with any new task. There is not one person who is able to jump in to a task at an intermediate or advanced level and know what to do without background information or know how. As you have picked up this how to guide, I want to create a balance between telling you a story of how using descriptors and the examples of coding itself. Sometimes coding can seem intimidating even to seasoned and veteran programmers and coders. Never feel as though you are the only person who may be unclear about what should be done. Everyone needs to look up a reference and definition of things or how they should be done. This book should be seen by you as nothing more than a knowledge base and future reference guide to your skills. Now you will be able to build on your knowledge with some new examples of coding more difficult statements and such.  
+ Below you will find some more complex examples for you to try out within your own virtual environment. Remember that if you are having issues as you try things out, another smart tip is to slowly reread what the coding should be and compare that to what you have entered into your system. Always remember that the computer is a processing tool that will only listen if you speak to it in its own language (Python). 
+ A Quick Database Checklist 
+ As you are learning how to create and maintain a database, I think there are some key items that allow you to have a reference that can assist you to make proper choices and selections. First, I think it is really important to install PostgreSQL on your server. Second you should see that psycopg2 library is something in your applications dependencies. Thirdy, make sure you have configured your web application to be able to connect to the PostgreSQL instance. Fourth you should create models in your ORM (or with something like SQL Alchemy with Flask). Fifth you should build database tables or sync ORM models with, for instance, PostgreSQL. Finally you can begin to read, create, update or delete data! These six steps should help you in your basic creation and usage of your database.  
+ Examples of Interactions 
+ The examples in this section are designed to allow you to read a thorough description of what the idea behind the coding is and then synthesize that with a visual of the text and coding you should use. For the purposes of these mini tutorials, we will be using something called in-memory-only SQLite database. This database services as a way to test out your code. I highly suggest you use some software like this as you test out your new coding knowledge. A warning as well, for some of these lines that are long, I have made the font smaller so you can see how they are supposed to be coded, line by line, so as not to confuse you when you go to practice yourself. One last note before you try these yourself—remember to look out and properly place spaces within your code. Forgetting one small space (or forgetting the four spaces in front of a line!) will throw off your directions to the computer! 
+
+ Version Check- This simple command line will allow you to run a simple check for the version of SQLAlchemy we are operating under and looks like this: 
+
+ >>> import sqlalchemy 
+ >>>sqlalchemy._version_ # docutest: +skip 
+ Would them produce this example result- 1.1.0 
+
+ Connecting- to go through the connecting process, we are using a sequence that involves the following: 
+
+ >>> from sqlalchemy import creat_engine 
+ >>> engine = create_engine('sqlite:...memory:', echo+True) 
+
+ Define and Create Tables- Most things within SQL are represented in columns of data. That being said, it is obviously important to know how to create a key structure within this virtual environment. For this example, we will create two tables, the first for users and the second also represents email addresses within the same table: 
+
+ Users Table—  
+ users = Table('users',metadata, 
+     Column('id', Integer, Sequence('user_id_seq'), primary _key=True), 
+     Column('name', Example(50)), 
+     Column('fullname", Example(50)), 
+     Column('password, Example(12)) 
+ ) 
+ Email Address Added on 
+ >>> from sqlalchemt import Table, Column, Integer, String, MetaData, ForeignKey 
+ >>> metadata=MetaData() 
+ >>> users = Table('users', metadata, 
+     Column('id',Integer, primaru_key=True), 
+     Column('name', Example), 
+     Column('fullname', Example), 
+ ) 
+   
+ >>> addresses + Table('addresses', metadata, 
+     Column('id', Integer, Primary_key=True), 
+     Column('user_id', None, ForeignKey ('user.id')), 
+     Column('email_addresses', String, nullable=False) 
+    ) 
+   
+
+ Insert Expressions- This represents the ability to INSERT a statement. Typically this can be created relative to its particular target table, like so: 
+
+ >>> ins =users.insert() 
+ To give you a better idea, and see a good example of how data is actually stored within the typical Insert construct you build 
+ >>>  ins = users.insert().values(name="jon" , fullname "Jon Doe') 
+ >>> str (ins) 
+ 'INSERT INTO users (name, fullname) VALUES (:name, :fullname)' 
+   
+
+ Executing- As we spoke about INSERT above in the last coding example exercise, this is a more concise example of how to execute this function: 
+
+ >>> conn = engine.connect() 
+ >>> conn 
+ <sqlalchemy.engine.base.Connection object at 0x...> 
+ Now add on to the previous by taking our Insert object and feed it into the Connection object 
+ >>> result = conn.execute.(ins) 
+ The (ins) above is telling the computer— 
+ INSERT INTO users (name, fullname) VALUES (?,?) 
+ ('jon', 'Jon Doe') 
+ COMMIT 
+ Now the insert statement we have created is issues to the database itself. We can think of the connection as the SQLite dialetic that helps generate the statement. If we wanted to check on the parameters automatically placed on the dialect we would do the following: 
+ >>>ins.bind = engine 
+ >>>str(ins) 
+ 'INSERT INTO users (name, fullname) VALUES (?, ?)' 
+
+ Executing Multiple Statements- The example of executing statements from above was meant to be slightly more information that is needed to execute a statement (specifically the last line). Hopefully by now you have pretty much mastered communication of one telling or manipulating one piece of data and can see possible places that coding would work for multiple statements at once. Or that at least it will make sense when you see it below— 
+
+ >>> ins + users.insert ( ) 
+ >>> conn.execute(ins, id=2, name='jane', fullname='Jane Doe') 
+ INSERT INTO users (id, name, fullname) VALUES (?, ?, ?) 
+ (2, 'jane', 'Jane Doe' ) 
+ COMMIT 
+ That example builds the table; whereas this example searches a dictionary for answers. In this case, we are using email addresses as what we are inserting: 
+ >>> conn. Execute( addresses.insert( ) , [ 
+     {'user_id' : 1, 'email_address' : 'dog@msn.com' } , 
+     {'user_id' : 1, 'email_address' : 'dog@yahoo.com' } , 
+     {'user_id' : 2, 'email_address' : 'planet@nasa.gov } , 
+     {'user_id' : 2, 'email_address' : 'president@whitehouse.gov } , 
+ ] _ 
+ INSERT INTO addresses (user_id, email_address) VALUES (?, ? ) 
+ ( ( 1, dog@msn.com') , (1, 'dog@yahoo.com' ) , (2, 'planet@nasa.gov' ) , (2, 'president@whitehouse.gov' ) ) 
+ COMMIT 
+   
+   
+
+ Selecting- This is the part of coding where you look at what you want to select from your data in the form of SELECT statements. Here is an example— 
+
+ >>> from sqlalchemy.sql import select 
+ >>> s = select ( [ users ] 10 
+ >>> result = conn.execute(s) 
+ For add a row to your results 
+ >>> for row in result : 
+     Print (row) 
+ (1, u-jon , u ' Jon Doe' ) 
+ ( 2 , u ' jane , u ' Jane Doe ') 
+ And here is how to use Columns 
+ >>> for row in conn.execute( s ) : 
+     print ( 'name : ' , row [users . c . name ] , ' ; fullname; " , row [users . c . fullname ] ) 
+ name : jon ; fullname : Jon Doe 
+ name : jane ; fullname : Jane Doe 
+ And remember to always close at the end— 
+ >>> result . close ( ) 
+
+ Operators 
+
+ As the word operate suggests, we are going into the computer in order to learn more about how it operates and how we can tell it what to do efficiently. In most databases, | | is the string concatenation operator used. For SQL, here is what that looks like  
+ >>> print ( ( users.c.name + users.c.fullname).  
+         Compile (bind=create_enhine('mysqll : / / ' ) ) )#doctest: +SKIP 
+ concat(users.name, users.fullname ) 
+ This final line can be used to make bitwise operators explicit— 
+ somecolumn.op( ' & ' ) ( 0xff ) 
+
+ Conjunction 
+
+ Keeping with the English tradition of conjunctions, within the confines of this use age of conjunctions the words utilized are and, or, not and possibly even a like. What I want to show you is a way to chain together multiple where clauses. See how the following is written in order to gain an idea of how to word this type of coding— 
+ >>> s = select( [ ( users.c.fullname + 
+             ' , ' + addresses.c.email_address ).  
+             label ( ' title ) ] ) . / 
+         where(users . c . id == address . c . user)is). / 
+         where(users . c . name . between ( ' a ', ' e ' )) . / 
+         where( 
+             or_( 
+                 addresses.c.email_address.like('%yahoo.com' ) 
+                 addresses.c.email_address.like('%msn.com' ) 
+         ) 
+     ) 
+ conn.execute( s ). fetchall ( ) 
+   
+
+ Using Aliases 
+
+   
+ If you want to be able to find something under an alias, for example their user id within the system, here is a method of doing just that 
+ >>> a1 = s.crrelate(None).alias( ) 
+ >>> s = select ([users.c.name]).where(users.c.id == a1.c.id ) 
+ >> conn.execute(s). fetchall ( ) 
+ [ (u ' jon ', )] 
+
+ Using Join 
+
+ As the name would suggest, this last example is one that joins together things, in the case, addresses— 
+ >>> print (users.join( addresses ) ) 
+ Users JOIN addresses ON users.id = addresses.user_id 
+   
+ Hopefully you are not overwhelmed by all of the lines of coding that are above. You should have seen much more intimidating blocks of code by exploring things around the internet. I hope that breaking them down by functionality and use you are able to see where you can built upon functions to make things do things simultaneously (through the multiple statements type of scenario) as well as begin to forumulate spots in the coding and programming that may lend themselves to harmful intervention by malicious attackers. Throughout the rest of this book, I aim to not only teach you more about how to code, I hope you will always keep in mind and pay special attention to how I refer to attempts made by attackers. 
+ Unfortunately, as you probably already know, internet experiences are similar to life—for every group of good, honest people there are some out there with ill intent. We have all hear different examples and instances of security breaches, even up through the high levels of our government. It is important for someone to take a creative and intelligent approach to their work building a virtual world. It is more important, especially when sensitive data is at stake, to understand potential risks and how to avoid catastrophes from happening. We are going to start looking at tips and tricks to help you have a leg up on the competition.  
+
+
+
+
+
+
+
+
+
+
+ Chapter 3- Tips and Tricks on Improving SQL Skills 
+   
+ In this chapter I want to start by sharing a series of 10 tips that I think are important for any Python speaker to be knowledgeable about. These 10 tips are good ways of practicing different common tasks that serve a greater purpose than just what the code itself is telling the computer to do, they are great ways to start off speaking more complex thoughts into the computer—and getting the desired output! As you have learned throughout your life, the more practice you put into something, the better the results become.  
+ 1.       How to tell Python to reverse a string 
+ >>> c = "codementor" 
+ >>> print "Reverse is", c[::-1] 
+   
+ 2.      A = [1,2,3]—storing all three values in a list of 3 new variables 
+ >>> b = [1, 2, 3] 
+ >>> x, y, z = b 
+ >>> x 
+ 1 
+ >>>y 
+ 2 
+ >>>z 
+ 3 
+ 3.      How to transpose a Matrix 
+ >>> mat = [[1, 2, 3], [4, 5, 6]] 
+ >>> zip(*mat) 
+ [(1, 4), (2, 5), (3, 6)] 
+ 4.     List1 = ['b','c', 'd'. 'e'] 
+ List2 = ['q', 'r', 's', 't'] 
+ Using these two lists, create a Python code to print—bq, cr, ds, et 
+ >>> for x, y in zip (list1, list2): 
+     print x, y 
+   
+ b q 
+ c r 
+ d s 
+ e t 
+   
+ 5.      A - ["Code", "mentor", "Python", "Developer"] - creating a single string out of the 4 terms  
+ >>> print " " join(a) 
+ Code mentor Python Developer 
+ 6.      Print "mentormentormentormentor codecodecodecode" with using loops 
+ >>> print "mentor"*4+' '+"code"*4 
+ mentormentormentormentor codecodecodecode 
+ 7.      Swap two numbers with one line of code 
+ >>> a=1 
+ >>> b=2 
+ >>> b, a =a, b 
+ >>>a 
+ 1 
+ >>>b 
+ 2 
+ 8.      Checking if two words are anagrams 
+ Def is_anagram(words, word2): 
+ """ Checks whether the words are anagrams. 
+ words: string 
+ word2: strong 
+ Returnes: coolean 
+ """ 
+   
+ 9.      A =[[2,3], [4,5], [6,7]], convert to a single list without loops where the output:= [2 ,3 ,4 ,5 ,6, 7] 
+ >>> import itertools 
+ >>>list(itertools.chain.from_iterable(a)) 
+ [2, 3, 4, 5, 6, 7] 
+ 10.  Take a string input 
+ Example "4 5 6 7" is returned as [4, 5, 6, 7] 
+ >>> result = map(lambda x:int(x) ,raw_input(), split())  
+ 4 5 6 7 
+ >>> result 
+ [4, 5, 6, 7] 
+   
+ All 10 of these tips seem to fall into a category of work that may not seem important to someone trying to tell the computer a complex series of things to do. However, these different tasks allow you to practice your knowledge of both the words themselves and the type of spacing and symbols needed to reflect your desired result.  
+ Besides all of these written out coding examples of tips and tricks, we also want to talk about the philosophy behind what you are doing. Hopefully knowing what your ultimate goal with coding and programming is something that you have a personal attachment to that allows you to create wonderful work through the passion that you have. I encourage you to think about and come up with ways that you like to stay motivated, as writing lines and lines of code can become incredibly tedious and tough. It is also important to make sure you allow yourself to have enough time to complete any project you start meeting your deadline. Doing quality work under pressure is something that doesn't always happen—you do not want to cause silly mistakes that can't be fixed easily (without a major headache for yourself). I have learned through my own experience that I make the majority of mistakes when I am rushed and unable to fully devote the time I need to the project at hand. 
+ Although it may seem silly to talk about your personal motivators, the only things we do in life give us some personal satisfaction. In order to make a career out of coding and programming you need to be able to look at a computer screen and type for long periods of time. Working up to this sort of long and strenuous task ay take time. Both your eyes and your hands have to be used to the effort and time you need to stay on your best behavior and intellectual processes.  
+ Learning the how's and whys behind what you do with programming and coding is very essential. The best tip and trick that I can give you is to bring your best self that is possible to the start of each and every project that you do. If you want to be an internet vigilante, you need to know how everything works forwards and backwards to avoid detection. If you are working for a website that has difficult demands due to something like privacy concerns that warn and protect against attackers with malicious intent, it is important to know how they operate and when you can be vulnerable.  
+ By going over how malicious people or virtual entities can break through and harm your system, you should have a better idea of how to protect yourself and your virtual system and coding. In order to defend yourself, an important part of a strategy is to understand how a potential threat may operate.  Within the next few chapters, I will give you a lot of both step by step instructions and written descriptions of how and why to do things. Hopefully this can help you be as successful as possible in your projects you embark on.  
+ Chapter 4- Rules to Improve SQL Skills 
+   
+ In Depth Description of How to Create a Database Table 
+   
+ One of the main functions of data management software is knowing how to create a database table in order to store the data you will use. As with everything else on a computer, we need to be able to specify how and why we would like something to happen and what we need the computer to build. If you put quality time and effort into creating you database, it may be a time intensive process, you will be much happier later as the data within your system grows and you do not run into problems. For this sample database, we are going to use the example of music songs on your computer you are trying to track how many times they have been played. This table will first delete any known table and any contents, then we create a table named "songs", then we need to tell our computer what to put into the database and finally we retrieve the data table and make sure it has been completed correctly.  
+   
+ Sample Coding 
+   
+ cur.execute('DROP TABLE IF EXISTS Songs ')  
+ cur.execute( 'CREATE TABLE Songs (title TEXT, plays INTEGER)') 
+ import sqlite3 
+   
+ conn = sqlite3.connect('music.sqlite3') 
+ cur = conn.cursor() 
+   
+ cur.execute('INSERT INTO Songs (title, plays) VALUES (?, ?)', 
+     ( 'At Last', 20 ) ) 
+ cur.execute( ' INSERT INTO Songs (title, plays) VALUES ( ?, ?)', 
+     ( 'Summertime', 15 ) ) 
+ Conn.commit ( ) 
+   
+ Print "Songs: ' 
+ cur.execute( 'SELECT title, plays FROM Songs ) 
+ for row in cur : 
+     print row 
+   
+ cur.execute( 'DELETE FROM Songs WHERE plays <100 ' )  
+ conn.commit ( ) 
+   
+ cur.close ( ) 
+   
+ Songs: 
+ (u ' At Last ' , 20 ) 
+ (u ' Summertime ' , 15) 
+   
+ Now you have a working table that will allow you to look at songs you have on your computer and the amount of time they each have been played. Manipulate it with different titles and make sure that your coding is done correctly. Here are a couple of different examples you can use to actually utilize the terminology we have talked about previously when manipulate databases (within the context of this song example). The first line creates the table, second line allows you to insert a song into the table, next line allows you to retrieve the data from WHERE clause exists, next you can use your request to tell the computer that they need to be sorted by title, then you can remove a row and in the final line it is an example of how to update your track count of a song in the table. 
+ CREATE TABLE Songs ( title TEXT , plays INTEGER) 
+ INSERT INTO Songs ( title, plays ) VALUES ( 'At Last ' , 15) 
+ SELECT * FROM Songs WHERE title = ' At Last ' 
+ SELECT title, plays FROM Songs ORDER BY title 
+ DELETE FROM Songs WHERE title = ' At Last ' 
+ UPDATE Songs SET plays = 16 WHERE title = ' At Last ' 
+ Try these examples out on your computer and see how you can manipulate your own table. These are commands that are basic staples of SQL (INSERT, SELECT, UPDATE and DELETE) and are really the basic four operations that are needed to maintain and create data. Becoming comfortable with using these terms will aid you in creating that quality database that will not cause complicated coding issues on your future project. Starting with a table with only two lines will allow you to master the basic table before adding large quantities of data to it.  
+ Some Language Rules to Follow 
+ As a quick reminder of some basic phrases that help to remind you of how to speak SQL's database language using Python in the most beneficial way for you. There are four different components/phrases that you should remind yourself of that make up Python as a language. These are that Python is a procedural language, Python is also imperative in nature, Python is also object oriented and finally Python should be synonymous as a purely functional use of words. All of these terms describe how you should think of your interactions you code into the SQL management system. You can speak different computer languages to SQL; however, I feel that Python is the most clear and concise language to master first. Let us go into detail a bit more and compare the four different ways to use Python as a language.  
+ Procedural 
+ When it comes to the term procedural, my mind automatically goes to how something is processed, as is the root of the word! This type of coding approach appears most in the form of sequencing, selection, iteration and modularization. This style also favors step by step configurations and iterations of common tasks that add an applied functionality with the procedural element. This procedural style is a slightly more complex approach to coding than our next one—functionality.  
+ Here's an example of what this type of code looks like— 
+ def DoAdd(Mylist): 
+     Sum = 0 
+     if type(Mylist) is list: 
+         for X in MyList: 
+               Sum += X 
+     return Sum 
+ MyList = [7, 8, 9, 1, 0] 
+   
+   
+ Functional  
+ The functionality of Python is what makes it the first language I recommend to people who are learning how to interact with their operating systems through coding. Using this functional approach, you code in a manner that doesn't have side effects that may frustrate you. It is more like a mathematical equation than something most would consider a language. Basically, look to this style of coding if you have something straight forward to code. Although all of coding is about manipulating words and phrases to get the desired result, the next approach can be seen as a more complex application. We will look at both the local function approach and the lambda approach. 
+ Now let us look at a way to code this with the lambda approach— 
+ import functools 
+ MyList = [7, 8, 9, 0, 1] 
+ Sum = functools.reduce(lambda x, y: x + y, Mylist) 
+ print(sum) 
+ And here is the local functional approach— 
+ import functools 
+ MyList = [7, 8, 9, 0, 1] 
+ Def addit (X, Y): 
+     Return (X+y) 
+ Sum = functools.reduce(AddIt, MyList) 
+ print(sum) 
+   
+   
+ Object Oriented 
+ When you hear the term object oriented, you probably think that the coding using this approach is something based off objects in the code. You may not first think of lines of code as an object, however they do create data fields and treat them as objects to be manipulated. There are complexities within this code that are not functions of Python—there are some abilities in other languages that can actually do something called "Data hiding"; however, with this language approach you can easily reuse different codes. This sort of thing comes in handy when you are programming an entire computer system!  
+ How do we use the language to show object oriented coding— 
+ Class ChangeList: 
+     Def__init__(self,MyList): 
+         If type(MyList) is list: 
+             self.MyList= MyList 
+         else: 
+                     self.MyList =[] 
+    def DoAdd(self): 
+        self.Sum = sum(self.MyList) 
+ CreateSum = ChangeList([7, 8, 9, 0, 1]) 
+ CreateSum.Doadd() 
+ Print(CreateSum.Sum) 
+   
+ Imperative 
+ When I think of the term, imperative, I think of importance to completing a task. This type of approach to coding occurs when something important, like a direct change to the program, is needed to be carried out in the coding. This is a concise, clear coding strategy that is really useful when manipulating the large data structures. The work you are doing with this coding style is really reflective of looking at the bigger picture type of changes in fundamental aspects of the virtual environment.  
+ Now let us examine this coding approach and see how it stacks up against the others— 
+ MyList = [7, 8, 9, 0, 1] 
+ Sum = 0 
+ for X in MyList: 
+     Sum += X 
+ print(sum) 
+   
+ These four very different ways of expressing something similar is interesting to look at within these pages in such a clear and obvious way to spot differences. You can also see from the wording and coding what sort of different approaches actually manipulate within the system. Being able to learn when each different style is appropriate is something that can allow you to be more fluent in the Python language. Just as with any new language, there's a learning curve during any time period you add another level of difficulty. Try these different methods out yourself within your system and see how they fit in your programming style.  
+ Spidering Using a Database 
+   
+ This section will help you to take your coding skills from your computer itself, into the world of the internet. If you have not heard the term "Spidering" before, you may be more familiar with the terms of "bot" or "crawler" that mean the same they. These are programs that go to a certain website, access their information in order to create entries for a search engine type index. Spiders are programs that are referred to as spiders as their "legs" can simultaneously gather data from many different pages. Spiders are something that an owner of a website would want in order to index their websites contents. They also use algorithms that adhere to common robot web rules of politeness, including not interrupting actual user's response times on a certain website.   
+   
+ For this example, we will use a Twitter Spidering sample source coding. This first part of the sample coding is based on retrieving data from a single person's Twitter statuses (along with their friends) and adding the information to a database that can be retrieved in the future. Basically you are just repeatedly checking different people, with new friends and storing the data in the database using the spidering software. The software will also track "how popular" someone is by counting how many times their username appears on someone's friend list. This is a pretty complex coding example and is based of Twitter coding, hopefully it will help you get an idea of how complex this coding can be and how to try it on your own computer.  
+   
+ Sample Coding 
+   
+ import urllib 
+ import twurl 
+ import hson 
+ import sqlite3 
+ TWITTER_URL = 'https://twitter.com/1.1/friends/list.ash' 
+ conn = sqlite3.connect( 'spider. sqlite3 ') 
+ cur = conn.cursor ( ) 
+   
+ cur.execute(" ' 
+ CREATE TABLE IF NOT EXISTS Twitter 
+ ( name TEXT , retrieved INTEGER, friends INTEGER)" ' ) 
+   
+ While True: 
+     Acct = raw_input( "Enter a Twitter account, or quit: ') 
+     if ( acct == ' quit ' ) : break 
+     if ( len(acct) <1 ) : 
+         cur.execute ( ' SELECT name FROM Twitter WHERE retrieved = 0 LIMIT 1 ' ) 
+         try: 
+             acct = cur.fetchone ( ) [ 0 ] 
+         except : 
+             print 'No unretrieved Twitter accts found ' 
+             continue 
+   
+ url = twurl.augment(TWITTER_URL, 
+             { ' screen_name ': acct, 'count' : ' 20 ' } ) 
+ print ' Retrieving ' , url 
+ connection = urllib.urlopen(url) 
+ data = connection.read( ) 
+ headers = connection.info ( ) . dict 
+ # print ' Remaining ' , headers[ ' x-rate-limit-remaining ' ] 
+ hs = hson.loads (data ) 
+ # print hson.dumps(hs, indent=4) 
+   
+ cur.execute( ' UPDATE Twitter SET retrieved=1 WHERE name = ? ' , (acct, ) ) 
+   
+ countnew = 0 
+ countold = 0 
+ for u in hs [ 'users ' ] : 
+     friend = u[ 'screen_name ' ] 
+     print friend 
+     cur.execute ( ' SELECT friends FROM Twitter WHERE name = ? LIMIT 1 ' , 
+         ( friend , ) ) 
+     Try: 
+         count = cur.fetchone ( ) [ 0 ] 
+         cur.execute ( ' UPDATE Twitter SET friends = ? WHERE name = ? ' , 
+             ( count+1, friend) ) 
+         countold = countold  + 1 
+     except : 
+         cur.execute( " ' INSERT INTO Twitter (name, retrieved, friends ) 
+             VALUES ( ? , 0 , 1 ) " ' , ( friend, ) ) 
+         countnew = countnew + 1 
+ print ' New accounts= ' , countnew, ' revisted=' , countold 
+ conn.commit ( ) 
+   
+ All of these coding examples in this chapter are hopefully all making sense to you at this point. However, if you are confused, I encourage you to go back and look at each example and find the context in which you would use this type of coding for your personal use. Sometimes information and help does not always make sense to us unless we put it into action. I used this Twitter example to show you how to create something to spider because I think it creates a great example of how minimal information (all posts are 140 characters or less) can potential lead to someone learning more about you and your online friends than seems reasonable from the novice's eye. As you can see from this example, it really doesn't take much work or ability (as you can find this example in this How To book) to be able to asses a situation.  
+ Unfortunately for everyone, even though a lot of people build spidering bots to help assist them with their own personal sites, people can use them for malicious intent as well. Although sometimes you run the risk of sounding or thinking in a slightly paranoid way, coding and programming really asks you to always be thinking about the next step. Being able to acknowledge that your coding and programming may have flaws is a very helpful step in checking your own work and making sure it cannot be easily accessed. Throughout this book I repeatedly try to impose upon you the importance of checking yourself and trying out any new coding or programming first within your own test environment.  
+ It is always better to ruin the entire thing that is a test than to compromise even a small part of your working project.  
+   
+
+
+
+
+
+
+
+
+
+
+ Chapter 5- Common Mistakes and Pitfalls Typically Made 
+   
+   
+ In this chapter, I want to share with you some ideas on how to avoiding making mistakes. Although I have already mentioned a bit about how to avoid spacing issues with coding, I want to go into more detail and help you with more than just that one aspect of coding. Hopefully by this point you have used your own computer programming skills by practicing on your own device and have a fairly good idea of what you are doing.  
+ Although no one likes to make mistakes or see themselves as human, computers can have potential flaws and never make you aware of them. By avoiding problem solving before something bad occurs you run the risk of compromising your entire project and hours of hard work and effort. By utilizing these first 12 tips, you can create good problem solving, and preemptive, solutions.  
+ Do Not Overlook Details to Hurry Your Project Along 
+ Sometimes we all feel like we need to get something done as quickly as possible, due to pressure from superiors or our own personal needs. If you start to allow yourself room to be sloppy with your programming, you start to make errors that would be obvious if you were following the correct format. The misplacement of a ? or _ could cause a huge potential head ache, as well as a waste of time easily avoided by doing things right in the first place (something I feel like my parents as I use that phrase! But it is true!).  
+ If you are planning out a trip, would you forget to include your estimation for how much gas you will need and where you can stop? There is no reason to hurry yourself to the point where you run out of gas in the middle of the desert. Just as with this analogy, you do not want to skip over details that may seem insignificant as it really could lead to you a disastrous scenario—in a state of panic and anxiety. Do yourself a favor and make sure to remind yourself of the key importance of not running out of gas in the coding and programming you do.  
+ Do Not Become Completely Obsessed With Details 
+ Although we do not want to completely overlook things in an effort to be fast, you can also create problems for yourself if you become too detail oriented. It is always good to have some system checks integrated into any software you may be programming. That being said, there is something to having too many protocols that send things moving into a crawl. The point of creating software is so that people can use it. Make sure to do things like, designing code that can check data when it appears but isn't disruptive when doing so. It's a careful balance that is important to learn how to do.  
+ Although we do not want to get caught in a desert with no gas, we also do not want to have so many options that we can't remember our original purpose. If you have ever taken a trip with someone who plans out every minute detail (like minutes it takes to eat breakfast or spend at a historical site) you know that it can feel like more work when things are over planned. Strive to find a balance between these two very different philosophies—usually the middle road is where you can find the greatest keys to happiness.  
+ Always Make Sure You Simplify Control 
+ Always, always make sure that there is only one code in place for each job! If there are two different places for the same code, there is a huge chance that one will be changed and the other will not be—if you have more than two places, it becomes increasingly chaotic. It is more common to have these sorts of confusions in programming when there is more than one programmer involved. Make sure to check and make sure you do not have duplicate coding, otherwise you are setting yourself up for a headache in the future.  
+ Just as we talked about the road trip in the last few tips, one can not underestimate the power of staying calm and in control when the unexpected happens. Do not drive a manual car if you do not know how to drive using a stick shift. Even though there are many drivers that enjoy the additional element of control this method of driving uses, it does not do you any good to try and drive cross country in a car you can't use! Keep your coding and programming within your personal abilities and do not try to control too many details, they can get overwhelming and frustrating.  
+ Delegating Frameworks  
+ Do not let yourself purely use automated tools to produce frameworks of code. As in the previous chapters I talked about the functionality of coding, it's important to always retain this, especially when dealing with the foundation of your programming. By assuming that the frameworks are correct could possibly lead to an inability for the user to not know what is wrong with his or her coding. Being able to understand the language you are speaking to your computer in is vital—this can easily be lost when you don't speak the language, or know how a framework was set up. My rule of thumb is not to use something I can't figure out. You can always learn new languages in your off time but during a project it is much more difficult to have time for trial and error.  
+ It is always important to know your product and the best ways to use it. Even though sometimes you can "fake it 'till you make it" with certain things in life—when a problem should arise your lack of knowledge will be easily spotted. Make sure that if you do use a premade framework you are able to see both the positive and negative aspects. Make sure you know how the frameworks coding and programming is done to a T, that way if there is an issue you can solve it quickly and easily.  
+   
+ When to Place Trust in the Client  
+ I would say that the most important thing to keep in mind about a client is to never assume it will do what you want it to do. Always check and see what is being sent back from the client in order to see what it the browser is executing. This can be dangerous if not looked into by a programmer as someone could easily speak to the client (a malicious person) and send along SQL instead of an answer. Therefore adding the user onto the query where a litany of malicious things could happen to some part of the system. If you happen to run into a situation where there are multiple holes that threaten security, your entire system could very easily be compromised or ruined. Knowing and being a part of building the databases and framework of your system can help to eliminate harmful attacks through the power of knowledge and hard work.  
+ Just as with the earlier advice about overwhelming yourself with details, do not let this spill over into trusting the client to do what it is supposed to do. You need to always strive for balance in your work—however, I think what may be the most important phrase to remind yourself of is that balance in life is a key thing. This scenario is no different.  
+   
+ When to NOT Place Trust in the Client  
+ Just as with the situation above regarding being too loose or too strict with coding, you also can sometimes rely on the client to do its task and should trust it. If you have done your homework and are competent in your abilities, most likely through a lot of practice, you should rely more on the client to do what you are telling it to. If you have too much security, you put yourself at risk of having to loosen structures to keep things running—in turn, you are increasing your risk of attack through these lessened structures. I would even argue that some sites that have outrageous security features like long personal questions simply to have access to things like celebrity news. It also puts the website in the position to then protect that data, another difficult task. This is why a lot of people have minimal security on some sites, they don't want to be responsible if something happens to their system and data is hacked.  
+ By using your knowledge and principle of balance, you should be able to look at the client and know when it is not working and is not trust worthy. Being aware and knowledgeable about the multitude of aspects of your product will allow you to create the best possible codes. Strive to always understand every stroke you make with your key board so you know what is being communicated.  
+   
+ Let's Not Rely too Heavily on Magic Boxes 
+ When you think that someone has created a master security feature, obviously you are going to want to include that in your programming, right? Thinking about what I said earlier about framework, I caution you not to rely on the software just because it sounds like a good idea. Cryptography can obviously serve you well to know how to do (encrypting data is very important); however, believing that a software will work because it is marketed that way doesn't prove anything. Adding someone else's cryptography work may seem like a good idea but what if part of its coding effects your own code. What if something within your system and the encryption can't communicate correctly and you are left with a compromised system? Many of the magic algorithms that are sold to people seem too good to be true—which means that they probably are! Be sure to be the master of your coding and programming, do not give in to a quick fix because it is easy.  
+   
+ Trying to Reinvent the Wheel 
+ I would say that the most important thing to keep in mind about a client is to never assume it will do what you want it to do. Always remember that, even though you want to be weary of using other people's code and adding it to your own—if you aren't sure if you had made the right code, check with a resource like this book. Shy away from thinking that you are right and double check that you are. If you try to reinvent the wheel, practice in a virtual environment where security risks and problems are not going to be a big deal. Always remember to keep yourself safe.  
+   
+ How You Can Open Up too Much to the User 
+ Remember to keep yourself offering and tweaking a reasonable number of features. The average user of your database probably does not know how to use specialized features—especially if you are coding for your work or other business. Make sure that the amount of features is appropriate to offer and that you know how they each work. As with anything, too much of a good thing can turn badly. In this situation, you could make an environment that annoys or detracts users by being too complex. Keep it simple, sweet and understandable by the average user.  
+   
+ How You Can Over Determine a User's Experience  
+ How do you find a way for a user to not be underwhelmed by your virtual experience? Allow them enough options to not get bored by your handiwork. If you only have a program that will do one function, more than likely your users will get bored—or you won't have users for too long. Try to find a happy medium between overwhelming and underwhelming your user. Make something that people can and want to use and can understand the functionality of it.  
+   
+ Closing the Source 
+ How much do you want you want others to know about your software? Think a little here about Linux versus Windows. More people have probably heard about Windows, more of the average person's type of operating system. Whereas Linux is highly regarded within the actual computer programmer community. People get nervous about the open source nature of the code; however more eyes on the coding itself usually turns out better for everyone. If the difference between your program being good and great is equivalent to sharing with each other—didn't we all learn the lesson as kids that sharing is caring? Don't necessarily close yourself off to the idea of sharing your programming with others—it may pay off greatly! 
+   
+ Is Openness the Perfect Solution? 
+ As you have probably noticed by now, I am really giving the pro and con of each argument we are talking about. There are positives and negatives to every choice you make, coding is no exception. What is the goal behind the virtual world you are building? Do you want to create the next great program or app? Do you want to build the next security system for the government? These two different types of programming can determine how open or closed you want your ideas to be. Try to personalize your project and its outlines based upon your short and long term goals. Never sacrifice your ideas based on the ideas of others—play around within your own practice software and see what the best results are for you and your desired results.  
+ Final Thoughts on Common Mistakes and Pitfalls  
+ With all of these tips in mind, remember the common themes throughout them. These are that you should always be striving to know what is happening in your code and programming so you can pinpoint and address potential trouble sources. The ability to use critical thinking skills with your knowledge is something that is so invaluable, especially in a time of potential crisis that may bring down an entire database. Is anyone perfect? Definitely not—however people should rise to the level of competence that is required to complete a task. Never think of programming and coding as an instance where you are just following methods created by others. It is important to constantly keep your creative intellect engaged in what you are doing; I believe if you do this, you may be able to come up with a new, better and increasingly efficient solution to many, if not all, problems that come your way. Technology is an ever evolving and improving field of work that I encourage you to stay knowledgeable and active in to keep and hone your skills.  
+ In order to be a person who is in charge of their coding and programming projects, it is always necessary to be aware of the potential challenges. Although this chapter has not included every possible potential mistake or mishap, these are the ones that I believe can lead to some truly negative consequences. In the next chapter I aim to get a bit more specific and allow for you to see specific circumstances that may arise and create major problems for your program or entire database. Make sure that as your read the next chapter you keep in mind the basic thought patterns behind problem solving strategies to avoid common mistakes. These are two topics that are very interrelated and play off each other in a positive way, allowing you greater understanding and critical thinking skills.  
+   
+   
+
+
+
+
+
+
+
+
+
+
+ Chapter 6- Dangerous Programming Mistakes 
+   
+ I plan on sharing with you in this chapter some very common mistakes that can compromise your programming and probably cause you to pull your hair out. These are the types of mistakes that cross the line over harming your programming and causing damage. Take these following 25 tips on how to keep from making colossal mistakes that may jeopardize your hard work coding and programming.  
+ When you hear the word dangerous used in this context of coding and programming, you should take it as seriously as the word implies. Granted the future and fate of the world is not at your fingertips, your own potential world could be greatly effected in a negative manner if you do not allow yourself to read and ingest these words of caution with an open mind. In general, people who think they know and have mastered everything (including coding and programming) are speaking an undeniable falsity—there is not possible way for one single person to have every answer! 
+ Taking into account the information in the previous chapter regarding the most common attitudes and ways that one can make a mistake, in this chapter I take it a step further by providing you with examples of how the programming can go awry. With the exposure of these 25 mistakes in this chapter, I hope that you will see how they can be applied to different scenarios you have potential already faced—or will face very soon. It is impossible for a person to not make a single mistake, as no one is perfect, least of all when you are writing lines of code and trying to understand the structure of a computer system. These mistakes are usually incredibly simple and almost always unintentional. I strongly advise that, as a method to avoid them, you always double, and maybe triple, check all of your work. It takes much less time to check than to rebuild, recode and reprogram something from scratch! 
+ 1.        Improper Input Validation 
+ Be careful if you are entering a value for something. Make sure that you have strict input validation. It is important that you do so to help keep attackers out or just simply having the wrong value in your code.  
+ 2.        Improper Encoding  
+ This is really the root of potential injection-based attacks on a system. This would allow for someone to attack and modify your commands—possibly allowing a complete compromise of your entire system. If you have a program that generates components or outputs via structured messages (queries or requests) make sure you are able to separate control information and metadata from the actual data.  
+ 3.        Inability or Failure to Preserve SQL Query Structure 
+ Also referred to as "SQL Injection", this happens when attackers maliciously influence the SQL sent to your database. This allows for them to modify queries in order to corrupt, steal or change underlying data. Be careful in allowing SQL queries with thinks like authentication—these can be altered to bypass security.  
+ 4.       Inability to Preserve Web Page Structure 
+ This is also sometimes referred to as "Cross-site Scripting", hackers and attackers JavaScript or a similar browser executable content to your generated webpage. Then your web page is liable to be attacked and accessed by users who can execute malicious script that looks like you sent it. With these HTTP and HTML data and script passing between very feature rich webpages. Basically, if you have a lot of bells and whistles on your site, you may put yourself in jeopardy of malicious attackers if you are not properly designed.  
+ 5.        Inability to Preserve OS Command Structure 
+ Some refer to this also as "OS Command Injection" in which you actually have software that bridges together outsiders of the network with your operating system. By invoking a different program on the operating system you allow untrusted inputs to feed into the command string. It's like an open invitation for attackers to your operating system.  
+ 6.        Cleartext Transmission of Sensitive Information 
+ If part of the purpose of your software sends private data, sensitive data or authentication credentials, you should obviously take extra precautions. All an attacker would need to do is control one node, in the multitude of nodes a network crosses in transit to the destination. Make sure to protect yourself and your data as best as you can.  
+ 7.        Cross Site Request Forgery 
+ The basic scare behind this tactic is that you accept candy from a stranger. Meaning, an attacker will cleverly disguise a request (sometimes looking as though it is from the user itself) that is malicious. If something like this were to be broached by an attacker, especially an administrator, there could be a complete compromise of an application's functionality.  
+ 8.       Race Condition 
+ This is a multilevel takedown done by an attacker that gains control of one process in order to create chaos and take further control in the process. This is usually something that involves data corruption and even denial of service. It is important to keep an eye out for any suspicious changes occurring in your software or database.  
+ 9.        Error Message Information Leak 
+ Error messages are was for secrets to be disclosed to an attacker who can misuse your software. These potentially leaked secrets could be anything from personally identifiable information, authentication credentials, valuable data or sever configurations. None of these things are things should be seen by hackers because even little secrets can bring a much more powerful and harmful potential attack.  
+ 10.     Inability to Hold Back Operations, within a Memory Buffer 
+ Make sure that your buffer overflows are as resistant as possible to elimination. This is one area that still needs a lot of work—unlike the many strategies about attack and detection techniques. Be careful and no matter how high level your language becomes as you advance, there still can be buffering issues! 
+ 11.      External Controls of Critical State Data 
+ So what ways can we store data? I would say they are hidden form fields, configuration files, cookies, profiles, registry keys, environmental variables or other locations. What do these all have in common? They can be modified by a malicious attacker. In HTTP type protocols, you have to have a form of user state information, no matter what it must be captured in every request. This leaves it exposed to malicious attackers. Always make sure if you do something like state a user is an administrator, you are ready for potential attacks that modify data to trick the application.  
+ 12.     External Controls of File Path or Name 
+ You should be very careful when you are constructing a filename because it could possibly point to an unintended directory. Attackers could perform simple ".." and be able to get into the restricted directory. Sometimes file attacks are prevented by something like a symbolic link following (causing your application to modify or read files the malicious attacker couldn't access directly). This also would apply if you had a program running and it accepts filenames as input along with raised privileges.  
+ 13.     Untrusted Search 
+ Software depends upon its environment to direct the search path to finding resources. These could be resources like configuration files or code libraries that hold important data within them. If an attacker gets ahold of the search path itself, the potential for harmful modifications occurs. 
+ 14.     Inability to Control Code Injection 
+ Code Injection is also referred to as control generation of code, which seems to be a term that may be easier to understand. Basically, although dynamically generated code may be something that is appealing for you—it is just as appealing to a potential attacker. If you are able to find your code directly in another place, any unauthorized party could potentially find out how to use your own code against you. Be careful as these external inputs could possibly affect the executed code (or even the inputs could be fed directly into the code). Bad news all around, really! 
+ 15.     Downloads of Code Lacking Integrity Check 
+ If you choose to download code and then execute it without checking you are assuming that code isn't malicious. There are many ways for skillful attackers to modify code before it reaches you. These are things like impersonating it with DNS cache poisoning or spoofing, convince the system to redirect users to a different site, hack the download site or even modify code as it crosses the network. Unfortunately this could even apply to your own installs updates and roduct downloads. Always check your system and its functioning to the best of your ability.  
+ 16.     Improper Resource Release or Shutdown 
+ If you make the mistake of not shutting down system resources, you also open yourself up to attack. Even if you thought you had gotten rid of something like memory, files, cookies, sessions, communication pipes or data structures, if you have not released them or shut them down properly, attackers could gain control over them. If any of this includes sensitive data, it could be a really area of concern for you.  
+ 17.     Improper Initialization 
+ Just as being able to properly shut down a resource to avoid attack, the same can be said for initialization. Attackers could initialize things for your and be able to extract sensitive information remaining from older sessions. There are certain variables attackers can use to modify and bypass your security. I believe from my person experience and research that obscure errors or conditions are the greatest cause of your code to inadvertently skip the initialization process.  
+ 18.     Incorrect Calculation 
+ A potential hole in your system that could give an attacker control over numeric calculation inputs (or math errors) cold potentially have serious security based consequences. You could allow more or less of a resource or even completely violate business logic (something that a simple calculation could produce a negative price) or even cause a denial of service. Any of these incorrect calculations could be done by yourself, an administrator or an attacker. This is a time when double checking your work becomes vital. If something effects your capital it is important to be a little hyper aware of it.  
+ 19.     Improper Authorization 
+ With access control, or authorization, you need to insure that users of your software are only doing what they are authorized to be able to do. If you do not have proper authorizations in place, you put yourself in a position to be exploited and exposed by potential hackers. Put some safeguards into place for you and your users safety.  
+ 20.    Use of Risky or Broken Cryptographic Algorithm 
+ Remember that cryptography is a hard thing to master. Never place complete faith in yourself that you have it completely right, as it is hardest for the most brilliant of minds to get it right. Be sure to test your own algorithms properly before relying on anything, especially if it is a cryptographic encryption.  
+ 21.     Hard Coded Password 
+ By allowing the same password to be hard coded across your system, you put both yourself and your customers at risk. If an attacker is a skilled reverse engineer, you run the risk of your entire system should the password become known. Hard coded passwords are also a huge pain to fix—overall I highly suggest you just avoid them, for your own safety and sanity.  
+ 22.    Insecure Permission Assignment 
+ Being aware of how secure something like a critical program or configuration file needs to be protected with permissions. When you are designing and implementing codes, you should always provide the user with basic security features that protect them while they use your software. Do not let something simple, like a permission, to cause major problems for you or a user down the road.  
+ 23.    Insufficiently Random Values Used 
+ This is where hackers can use a generating system you use to figure out the algorithm and with only a few tries could attack your system. In the virtual world, security really is all about staying two steps ahead of any potential trouble. This time of randomness may not be anything you have considered to be trouble before—so now that you are more aware, I suggest you go back and check on your own system and see if there are areas you can improve upon.  
+ 24.    Execution of or with Unnecessary Privileges 
+ Would you ask for permission to complete simple tasks in your daily life? Most likely you would not unless ir was necessary. When it comes to your software, you need to not give anything or anything a privileges for too long of a time. It becomes unnecessary and risks launching a separate program that would allow for an attacker to exploit privileges. Don't create more potential points of trouble in an effort to secure your system, that becomes an oxymoron. 
+ 25.    Client Enforcement of Server Security  
+ You should never place trust in the client to perform any security checks on behalf of your server. Attackers are smart and can find various ways to engineer your client to write their custom clients. Potentially, if your security is threatened, you should look to authorization, authentication and input validation as points of potential trouble.  
+ If this chapter has brought something specific to your attention, I hope it is reinforcing of the mindset from the previous chapter. Although this book is not made to scare you into not coding and programming your own system or database, I hope that it has shed some light on potential trouble sources that may lead to vicious attacks on your system. You can never be sure why or how someone is attacking you until you find evidence of it in your systems malfunctions. It is helpful to become well versed in the features that allow for you and your users to remain secure and protected.  
+ As a rule in life I don't think that scare tactics should be used and I don't think this book should come off in that manner. However, when your system is compromised it can be something you never are truly able to recover from. If you have put countless hours into creating something, having it taken away from you can be incredibly difficult and painful. Hopefully you will find ways to utilize the tips in this book to never have to experience something like this yourself. The goal of this book is really to share my experiences and ideas with you in order to share and help you create a much smoother experience than you would have without the knowledge contained in these pages. I believe that shared knowledge is a wonderful thing that leads to a lot of the world's great innovations—coding and programing certainly falling into this category! 
+
+
+
+
+
+
+
+
+
+
+ Chapter 7- Helpful Resources 
+   
+ The first resource I hope you come to if you need help is this book. Hopefully you are able to read and flip through this book as a point of reference if you run into trouble. I also hope that you are able to have learned how to take your programming to the next level of difficulty. From the first chapter of this book, or if you read my previous How to book, I have tried to impart not only the knowledge you need to know but also how to get into the mindset of a coder and programmer. I want to point out a few things I think of as helpful guides or resources that have been brought to you in this book. After that, I will list some resources that are outside avenues to go down.  
+ The first thing I hope you learned is a clearer sense of what the differences and similarities are between SQL and Python. Although you have previously had knowledge of SQL before picking up this book, my aim was for you to understand more than just the basic functions of the program. Through the help of explanations of how SQL acts in tandem with Python, my goal in writing this manual was to allow for a "big picture" point of view could lead to better understanding of both SQL, Python and computers themselves. I think it is always important to know how to take apart and put back together anything you are working with. Computers are a great and straightforward example of knowing how to find small grains of sand on a beach—when something goes wrong with the structural coding of something like a company data base. 
+ For the importance of Python, I would like to continue on to the previous paragraph that an understanding of language is crucial to communication of people and computers alike. I would even argue that it is more critical when dealing with machines, as they have no room for error of interpretations—or there is a potential to completely stop the machine from running. Being able to learn how to express you desires to the computer is an important part of getting the results you want. Just as much as the structure of how you communicate, if you don't know the words for something it is impossible to relay the correct message. As the computer operating system is built of code, it is important to have a reference guide (much like this book) that allows you to see code examples and have them explained to you. We cover the key terms needed in this book—but there is always more to learn when you master these skills.  
+ I believe that one of the most important things you can do as a helpful resource is to practice. Being able to use your own experiences to look back on as ways to improve your skills is something that is invaluable as a resource. The most important thing that I can think of to assist you with your coding is to try things out from this book in order to understand where and when you need to place words, spaces and characters in order to get your message across. I think that it is invaluable to have the input of the system you are working with in being able to work properly for you. Learning a new language and element is always a difficult thing but practice is certainly the most important element.  
+ I also encourage you to explore the resources you may find on the internet that are outside the scope of this book. Unfortunately, it is humanly impossible to provide every single grain of knowledge within one readable book. There are lots of quality resource pages and forums on the internet that deal with all we have covered in this book, in addition to many other different things. It is important to know how to use your resources to get insight and answers you want. As I am sure you are aware, the internet is filled with millions of different websites and forums and they may not all be good. The great thing is that once you find a quality one, more than likely the users or creator of the site will be able to direct you to place to find the answers you may need.  
+ Outside of the internet, there are still some magazines that you can subscribe to and get on a regular basis. These types of resources allow for you to read what experts and knowledgeable people in the working space are finding out. This could be anything from helpful tips and tricks to new software that is coming out. These types of magazines also generally offer trouble shooting tips and sometimes even have a columnist you would be able to write in and ask questions of. As programming and coding is not a simplistic task, it is important to not look to simple answers all the time. There will be times that an answer is as simple as one space, character or line—however, I believe you should try to think and find both simple and complex answers and see which works best for you.  
+ Before we come to a close in this chapter, I would like to take a little time to address the potential advanced students who may be looking for a greater challenge outside the scope of this book. If you are looking for a database that has slightly more complicated schemes that also offer advanced features useful for web application data storage. I would encourage you to look for programs that include these four elements that allow you to create a more challenging database. The first is that is has advanced columns that have the ability to store semi-structured data, such as JavaScript Object Notation. Second it should offer data replication between one or more read-only slave instances and the master database. Third it should allow for statistics, monitoring and other useful information to assist with database schemas and tables. Finally you should be able to allow horizontal scaling that includes multiple databases, each serving as read-write instances, considering the cost of latency in data consistence (also called sharding).  
+ I felt like it was important to provide you with an additional resource in case you are up to a challenge. You can always come back to this part of the book and look at the previous paragraph for new ideas after you have mastered the content of this book (however long it takes you, don't push yourself too fast too soon!). The next step in the process is that, after you have mastered the content of this book, look towards a new and advanced how to guide to improving your skills.  
+ The very last thing I would like to bring up in this chapter is that, if you are also a visual learner, there are literally thousands of videos that could assist you with honing your skills. As you are looking to get further into how to work and manipulate a computer, I assume you know a lot about the power of the internet. Through even websites like YouTube, you can find a lot of quality, informative and helpful visual examples of what your computer screen should look like. I hope that you would use this type of resource to clarify any point that may have physically written out, like the lines of code.  
+
+
+
+
+
+
+
+
+
+
+ Conclusion 
+   
+ It is my hope that this book has allowed you to gain a concrete understanding of the intermediate skill set needed to use Python in SQL. I tried to provide you with starting off points that anyone could use within their programming code. There is something very empowering about being able to truly understand how your computer works and how to get it to carry out your code. Although it may not seem like it from this somewhat short book, if you retain the information (or even a large part of it) you have set yourself up with a growing understanding of the building blocks of programming.  
+ It is important to always be detail oriented and open minded to learning new things when you are programming. Remember that even when you master SQL and Python, there are other systems and languages out there to learn from. The work of technology is constantly changing and adapting to new technologies and discoveries. It is important to note that everything in this book are things that you can build upon and change for your own uses.  
+ Our world these days in spent in large part in a virtual environment. Most everyone has a smart phone they use to communicate to loved ones and enjoy apps, such as social media based ones or games. The common theme among all of these environments is that they are all software created by someone using basic programming and coding. The graphic interfaces should not be a silk screen that doesn't allow for you to see the basic fundamentals are any different than a database you build in SQL using Python. You are designing and coding something that you want others to use and have a series of databases that contain pertinent information.  
+ Although it is not overnight that you can create the next great piece of software or app craze on a smart phone, you are taking the first steps into creating your own masterpiece by learning more about coding and programming. Although it is not wide to get in above your knowledge base on a project at this stage of your programming and coding career—if you never take risks you will never know how much you can achieve.  
+ I hope that through the process of further explaining how you can utilize SQL to create new things you have discovered more about the subtle and complex features available to you. Although there are subtle ways to communicate and control the software that come from the actual experience of coding and programming, hopefully you are able to use this book as a firm resource you can look to as your sample out your code in a safe, protected and sample environment. I think I have used sufficient terminology to communicate to you that there are a lot of risks with trying untested code that you do not understand, I feel it is important to further emphasize how you can destroy your system with a lack of attention and care.  
+ Although you may have seen my focus in this book as constantly warning you against potential dangers, the purpose was to give you specific strategies to be successful in your programming and coding. It was my desire that this book open up your skill set further and you are now able to have a greater, and not beginners, understanding to using SQL and Python.  
+ The fact that thousands of websites and computer systems are corrupted on a daily basis, I want you to be able to be knowledgeable and able to solve problems as they arise. It is important to always consider every possible alternative that can allow you to be safe and protected in both your real life and virtual world. Arguably, we see more and more computer based issues that translate into people suffering in their personal life. If your livelihood is work you do through the computer by programming and coding (or you would like it to be) it is important to take time to learn how to build and protect what you have or will create.  
+ I believe that when you reach this point in the book (the end), you have a full understanding and comprehension of the data before you. You can confidently know that your skill set has evolved into something that you could begin to look for a career in computer science (if you don't already have one). Doing this work is most likely something you do as a hobby at first but turns into a way to earn your living. It is important to never think you know absolutely everything about the computer system you are working with, although the fundamental principles stay the same. How a computer operates is something that becomes more invaluable to know as time moves on and technology gets better.  
+ Finally, if you found this book useful in anyway, a review on Amazon is always appreciated! 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,1217 @@
+
+Data Science Programming in Python
+Copyright © 2016 by Anita Raichand
+All rights reserved. No part of this publication may be reproduced, distributed, or
+transmitted in any form or by any means, including photocopying, recording, or other
+electronic or mechanical methods, without the prior written permission of the author,
+except in the case of brief quotations embodied in critical reviews and certain other
+noncommercial uses permitted by copyright law.
+
+Table of Contents
+Introduction
+Data Science Programming in Python - Data Munging
+Background
+Data Munging and Carpentry
+Data Science Programming in Python - Grouping and Aggregating Data
+Grouping and querying data
+Grouping and aggregating
+Data Science Programming in Python - Visualization
+Data visualization
+Data Science Programming in Python - Time Series
+Afterword
+
+Introduction - Data Science Programming in Python
+The aim of this book is to show how to apply data analysis principles to a practical use
+case scenario using Python as the data analysis language. We'll go on this journey by
+looking at the the data workflow from munging to grouping data to visualizing and also
+include some time-series analysis as well. The format includes asking questions of the
+data and showing the programming steps needed to answer the question. By the end of
+reading this book, you will be able to apply these techniques to your own data.
+About the book
+This book is written in a literate programming style where text, code, and output are
+presented together . This will maximize your learning and understanding of code and the
+data analysis workflow. The book teaches the type of interactive coding and iterative
+analysis that is essential to be successful in data science programming.    
+Coding Tips
+In the code snippets, a backslash character (\) means that the same line of code is wrapped
+to the next line in the book. You do not need to type this character into an interpreter.
+Use a REPL (en.wikipedia.org/wiki/Read-eval-print_loop) to have an interactive
+environment where you can write code and see the resulting output.
+Try the methods you learn in this book on your own data to reinforce learning. Use a
+Python interpreter to code and your favorite editor to take notes.
+
+Data Science Programming in Python - Data Munging
+Background
+Bay Area Bike Share commenced it's pilot phase of operation in the San Francisco bay
+area in August 2013 with plans to expand. It is the first bike sharing scheme in California.
+As it is meant for short trips, the bikes should be returned to a dock in thirty minutes or
+less or an additional fee would be incurred according to the website. There are two types
+of memberships: customer and subscriber. A subscriber is an annual membership while a
+customer is defined as someone using either the twenty-four hour or three day passes.
+Currently(Sept 2014), it costs nine dollars for twenty-four hours, twenty-two dollars for
+three days, and eight-eight dollars for the year. Overtime fees are four dollars for an extra
+thirty minutes and seven dollars for each thirty minutes after that. Data on the first six
+months of operations were released as part of a data challenge. The data included three
+files for trip history, weather information, and dock availability. The merged data was used
+for the following analysis.
+Data Munging and Carpentry
+First, we'll read in the data and inspect the data columns and datatypes and think about
+what questions we want to ask our data and what things are we interested in learning about
+the data. Be curious and empathetic in thinking about what the various stakeholders
+including the City, the customers, and other interested people would be interested in
+gleaning by keeping civic fiscal, civic, and social goals in mind. In addition to that, there
+will be quite a bit of cleaning and data carpentry needed to get the data into a format
+useful for analysis.
+The dataset comes from three csv files from the Bay Area Bikeshare data challenge. We
+merged the data in R as we started a similar analysis there but really wanted to use
+IPython and the superb time series functionality in Pandas.
+Optionally, one can cache or log the code in IPython with the following two commands.
+%load_ext ipycache
+%logstart
+Activating auto-logging. Current session state plus future input saved. Filename :
+ipython_log.py
+Mode : rotate
+Output logging : False
+Raw input log : False
+Timestamping : False
+State : active
+Import the libraries that are needed.
+import numpy as np
+import pandas as pd
+
+from datetime import datetime, time
+%matplotlib inline
+import seaborn as sns
+from ggplot import *
+print pd.__version__
+print np.__version__
+0.14.1
+1.9.0
+Read the data.
+dmerge4 = pd.read_csv('finalmerge.csv', parse_dates=['Start.Date'])
+dmerge4.head(3)
+Format column names.
+dmerge4.columns = dmerge4.columns.map(lambda x: x.replace('.','').lower())
+dmerge4['zip_name'] = dmerge4.zip.replace({94107: 'San Francisco', 95113:\
+'San Jose', 94301:'Palo Alto',94041:'Mountain View',94063:'Redwood City'})
+Inspect datatypes.
+Inspecting the datatypes and variables are the first things that should be done in data
+munging. And, we'll do it again after doing our data cleaning and formatting operations.
+Notice that the end date and start date are not currently in datetime format so let's remedy
+that and take care of some other things for the questions related to time-series.
+dmerge4.dtypes
+> lubstartdate:  object
+> startstation:  object
+> tripid:  int64
+> duration:  int64
+> startdate:  datetime64[ns]
+> startterminal:  int64
+> enddate:  object
+> endstation:  object
+> endterminal:  int64
+> bike:  int64
+> subscriptiontype:  object
+> zipcode:  object
+> date:  object
+> max_temperature_f:  int64
+> mean_temperature_f:  int64
+> min_temperaturef:  int64
+> max_dew_point_f:  int64
+>meandew_point_f:  int64
+>min_dewpoint_f:  int64
+>max_humidity:  int64
+>mean_humidity:  int64
+>min_humidity:  int64
+>max_sea_level_pressure_in:  float64
+>mean_sea_level_pressure_in:  float64
+>min_sea_level_pressure_in:  float64
+>max_visibility_miles:  int64
+>mean_visibility_miles:  int64
+>min_visibility_miles:  int64
+>max_wind_speed_mph:  int64
+>mean_wind_speed_mph:  int64
+
+>max_gust_speed_mph:  float64
+>precipitation_in:  object
+>cloud_cover: int64
+>events:  object
+>wind_dir_degrees:  int64
+>zip:  int64
+>landmark:  object
+>station_id:  int64
+>name:  object
+>lat:  float64
+>long:  float64
+>dockcount:  int64
+>installation:  object
+>zip_name:  object
+>dtype: object
+Working with dates and time
+Parse date columns into datetime format.
+dmerge4['enddate'] = pd.to_datetime(dmerge4['enddate'])
+dmerge4['lubstartdate'] = pd.to_datetime(dmerge4['lubstartdate'])
+Set datetime index column.
+dmerge4.set_index('startdate', inplace=True, drop=False, append=False)
+Extract hour,day,and month from datetime object.
+dmerge4['day'] = dmerge4.index.day
+dmerge4['hour'] = dmerge4.index.hour
+dmerge4['month'] = dmerge4.index.month
+Having the date and time is great. However for the analysis, it would be really useful to
+group time into subjective useful categories that would be useful for understanding usage
+a little bit better. We think we would be really interested to learn about the differences and
+similarities in usage and duration patterns between the morning commute and evening
+rush period. It would also be interesting to know the profile and usage of users in the
+middle of the day as well as at night and in what we refer to as the wee hours. So, We've
+decided to split the time into the following segments.
+morning: 5,6,7,8,9,10
+evening: 15,16,17,18,19
+midday: 11,12,13,14
+night: 20,21,22,23,0
+wee hours: 1,2,3,4
+dmerge4['timeofday'] = dmerge4.hour.replace({15: 'evening', 17: 'evening',20:' \
+night',19:'evening',12:'mid_day',14:'mid_day', 13:'mid_day', 9: 'morning', 22:'n \
+ight',11:'mid_day', 18:'evening', 16:'evening', 10:'morning', 21:'night', 23:'night',
+6:'morning',8:'morning',7:'morning',  1:'wee_hours',  2:'wee_hours',  3:'wee_ \
+hours', 0:'night',5:'morning', 4:'wee_hours'})
+Difference between end date and start date.
+dmerge4['diff'] = dmerge4.apply(lambda x: x['enddate'] - x['startdate'], axis=1)
+Difference between end hour and start hour.
+dmerge4['hourdiff'] = dmerge4.apply(lambda x: x['enddate'].hour - x['startdate']\
+.hour, axis=1)
+Now, one of the most important variables in the dataset is duration. We are very interested
+in understanding how long a customer or subscriber has a bicycle. Duration is defined as
+
+the number of seconds from taking a bicycle from a dock and returning it to a dock. Many
+of the interesting questions such as breakdown of duration between customer and
+subscriber by landmark or by time of day are relevant to both customer end users and civic
+authorities as it affects how many bikes will be available and where will they be needed.
+Let's transform duration into minutes and then also define a binary variable to compare
+trips under thirty minutes and less to trips over thirty minutes.
+Duration is in seconds so let's convert it to minutes.
+dmerge4['durationminutes'] = dmerge4['duration']/60
+Convert duration to an integer type.
+#round and convert to integer
+dmerge4["duration_i"] = dmerge4['durationminutes'].round(0).astype('int64')
+Duration as float type to two decimal places.
+#round to two decimal spaces and keeep as float
+dmerge4["duration_f"] = dmerge4['durationminutes'].round(2)
+We'll write a function that maps 'under thirty' to all values under 30 (minutes) and 'over
+thirty' to all values over 30 (minutes)
+def isitthirty(x):
+if x <= 30: return 'in_thirty'
+elif 31 <= x : return 'over_thirty'
+else: return 'None'
+dmerge4["thirtymin"] = dmerge4['duration_i'].map(isitthirty)
+dmerge4.dtypes
+lubstartdate                   datetime64[ns]
+startstation                           object
+tripid                                  int64
+duration                                int64
+startdate                      datetime64[ns]
+startterminal                           int64
+enddate                        datetime64[ns]
+endstation                             object
+endterminal                             int64
+bike                                    int64
+subscriptiontype                       object
+zipcode                                object
+date                                   object
+max_temperature_f                       int64
+mean_temperature_f                      int64
+min_temperaturef                        int64
+max_dew_point_f                         int64
+meandew_point_f                         int64
+min_dewpoint_f                          int64
+max_humidity                            int64
+mean_humidity                           int64
+min_humidity                            int64
+max_sea_level_pressure_in             float64
+mean_sea_level_pressure_in            float64
+min_sea_level_pressure_in             float64
+max_visibility_miles                    int64
+mean_visibility_miles                   int64
+
+min_visibility_miles                    int64
+max_wind_speed_mph                      int64
+mean_wind_speed_mph                     int64
+max_gust_speed_mph                    float64
+precipitation_in                       object
+cloud_cover                             int64
+events                                 object
+wind_dir_degrees                        int64
+zip                                     int64
+landmark                               object
+station_id                              int64
+name                                   object
+lat                                   float64
+long                                  float64
+dockcount                               int64
+installation                           object
+zip_name                               object
+day                                     int64
+hour                                    int64
+month                                   int64
+timeofday                              object
+diff                          timedelta64[ns]
+hourdiff                                int64
+durationminutes                       float64
+duration_i                              int64
+duration_f                            float64
+thirtymin                              object
+Length: 54, dtype: object
+%logstop
+
+Data Science Programming in Python - Grouping and
+Aggregating Data
+Grouping and querying data
+Now we will slice and dice our dataset using grouping, aggregation functions, summary
+statistics, and various querying and indexing operations. To really understand the bike
+sharing data, we need to look at natural groupings such as starting landmark, subscription
+type, and the time of day of the start of a bicycle trip. The work done in this section will
+set up some beautiful and informative plots in the next section of the analysis. Most of the
+tables below have plotting representations in the visualization section.
+Grouping and aggregating or reducing data and obtaining summary measures and statistics
+is the heart of data analysis and work together with the visualization process including
+those of an exploratory nature. The iterative process of data discovery at best leads to new
+questions and insights being discovered which inform and refine the data carpentry
+process. This is where the interactive repl excels. Think of it as a circular inquisitive
+process of data munging, grouping and aggregating, and visualizing. We will explore
+using SQL inspired methods of grouping operations in Pandas and the use of mult-indexes
+and hierarchical indexing.
+import numpy as np
+import pandas as pd
+from datetime import datetime, time
+%matplotlib inline
+import seaborn as sns
+from ggplot import *
+print pd.__version__
+print np.__version__
+0.14.1
+1.9.0
+%load_ext ipycache
+Grouping and aggregating
+It's time to explore various ways of grouping and aggregating data. Let's review some
+terminology. Dockcount refers to the number of docks installed, subscription type is either
+customer or subscriber, and landmark refers to an area covered by San Francisco, San
+Jose, Redwood City, or Palo Alto.
+In the data munging section, we created a column indicating whether the duration of a
+segment of a bicycle trip was under thirty minutes or over thirty minutes as this is the
+allotted time before being charged overtime fees. So, what percentage of total trips were
+over thirty minutes?
+What percentage of total trips were over thirty minutes?
+dmerge4.thirtymin.value_counts()
+in_thirty      134912
+over_thirty      9103
+dtype: int64
+
+Only 6% of total rides had a duration over thirty minutes so it looks like people are good
+about returning bikes on time. Or, were they? When we look at the statistics based on
+landmark and subscriber type, we will get a better picture of who and where have longer
+duration times.
+How does average duration vary by time of day for trips both under thirty minutes and over thirty minutes?
+dmerge4.groupby(['thirtymin','timeofday'])[['duration_f']].mean()
+Here is another way to check on how many observations out of the total had trip durations
+over thirty minutes.
+len(dmerge4[dmerge4['thirtymin']=='over_thirty'])
+9103
+How many trips began and ended at the same station?
+Only 6878 out 144015 observations or 4.8% were round trips so it would seem that people
+are really using the bicycles to get from point A to point B
+len(dmerge4[dmerge4['startstation']== dmerge4['endstation']])
+6878
+Let's look at average duration by subscription type. Customers are defined has having
+either a twenty-four hour or three day pass while Subscribers are defined as having an
+annual pass. Average durations for subscribers is almost ten minutes while it is sixty
+minutes for customers. Perhaps customers are recreational riders who take longer trips
+while subscribers are shorter distance commuters. We'll learn more when we slice and
+dice the data later.
+What is average duration by subscription type?
+dmerge4.groupby(['subscriptiontype']).agg({'duration_f' : np.mean})
+
+How many observations in the dataset belong to each subscription type?
+dmerge4.groupby('subscriptiontype').size()
+subscriptiontype
+Customer             30368
+Subscriber          113647
+dtype: int64
+What landmark occurs the most frequently among subscription type of subscribers?
+dmerge4[dmerge4['subscriptiontype'] =="Subscriber"].landmark.value_counts()
+San Francisco    102735
+San Jose           7219
+Mountain View      2157
+Palo Alto           905
+Redwood City        631
+dtype: int64
+So, we've learned that the majority of total subscribers are in San Francisco and take very
+short trips.
+What are the top five start stations?
+dmerge4.groupby('startstation').duration.sum().order(ascending=False)[:5]
+startstation
+Harry Bridges Plaza (Ferry Building)        12579544
+Embarcadero at Sansome                      10294998
+San Francisco Caltrain (Townsend at 4th)     8457338
+Market at 4th                                7706843
+Powell Street BART                           6100023
+Name: duration, dtype: int64
+What landmark has the highest total duration?
+The table below indicates that San Francisco had the highest total duration but keep in
+mind that the majority of total observations are also in San Francisco so of course the total
+would be higher. Using summary statistics will give a better idea of bicycling behavior
+than looking at total values. Although, for some purposes, it is good to know the total as
+well. For example, bicycle wear and tear based on total durations.
+dmerge4.groupby("landmark")['duration_i','subscriptiontype'].aggregate(np.sum)
+%%cache station.pkl stationdata
+stationdata
+What percentage of total bicycle docks area located in each landmark?
+
+54% of all docks are located in San Francisco so this may partially explain why total
+duration and bicycle trips taken in San Francisco are higher and why durations are higher
+in Palo Alto where only 6% of the docks are located.
+stationdata.groupby('landmark')[['dockcount']].sum()/stationdata[['dockcount']].\
+sum()
+What are the dockcounts by landmark and station name?
+stationdata.groupby(['landmark','name'])[['dockcount']].sum()
+
+What are the total number of bicycle trips by landmark?
+When looking at number of bicycle trips based on landmark, we see that 129,853 or 90%
+of total observations in the dataset were in San Francisco. 6% of total observations were in
+San Jose while only 1% were in Palo Alto.
+dmerge4.groupby("landmark")[['duration_i']].aggregate(np.size)
+What are average durations by landmark?
+Looking at average duration by landmark, San Francisco has the lowest duration followed
+by San Jose while Palo Alto had the highest duration. We can hypothesize that this may be
+partly due to fewer docks in Palo Alto or greater distances to travel as well as the
+subscription profile of Palo Alto bicycle users.
+dmerge4.groupby("landmark")[['duration_i']].aggregate(np.mean)
+What are average duration and dockcount by landmark and time of day for first six months of the bike share
+system?
+timelandmark = dmerge4.groupby(['timeofday','landmark']).agg({'dockcount' : np.m\
+ean, 'duration_f': np.mean,  }).reset_index()
+timelandmark
+   
+timelandmark.dockcount.max()
+
+Where and at when was the highest average dockcount?
+The highest dockcount was in Redwood City in the morning.
+timelandmark.dockcount.max()
+22.647058823529413
+What are the top five longest average duration grouped by time of day and landmark?
+The highest average duration was in Palo Alto in the wee hours.
+timelandmark.duration_f.order(ascending=False)[:5]
+21    150.501852
+24    127.363475
+15    126.402177
+6     109.684100
+16     83.482982
+Name: duration_f, dtype: float64
+What are the average dockcount and durations by time of day and landmark for the first six months of the bike
+share system?
+Pandas produces nice readable multi-index tables.
+np.round(dmerge4.groupby(['timeofday','landmark']).agg({'dockcount' : np.mean, '\
+duration_i': np.mean,  }))
+
+Grouping and aggregating time-series data
+Let's obtain mean values by day of the month by creating a grouped object from the day
+component of the timestamp and applying an aggregation function. We want to know if
+there is higher demand or trip duration at certain days of the month.
+day_means = dmerge4.groupby('day').aggregate(np.mean)
+day_means
+
+We can also create a grouped object using Pandas grouper. We can actually specify a
+resampling and a grouping using the Grouper. So, in this case I want the frequency to be
+monthly and group by landmark and subscription type.
+three_grouper = dmerge4.groupby([pd.Grouper(freq='M',key='startdate'),"landmark"\
+,"subscriptiontype"])[['duration_f']].mean().reset_index()
+three_grouper
+
+By unstacking the data created in the grouper object, we now have duration by customer
+and subscriber by landmark. This is a nice way to present the data in tabular format.
+three_grouper_unstack = dmerge4.groupby([pd.Grouper(freq='M',key='startdate'),\
+"landmark","subscriptiontype[['duration']].mean().unstack().\
+reset_index()three_grouper_unstack.head()
+three_grouper_unstack = dmerge4.groupby([pd.Grouper(freq='M',key='startdate'),"l\
+andmark","subscriptiontype"])[['duration']].mean().unstack()
+three_grouper_unstack.head()
+
+Average duration by month faceted by landmark
+grouperl = dmerge4.groupby([pd.Grouper(freq='M',key='startdate'),'landmark']).me\
+an()[['duration_f']]
+grouperl.head(10)
+Grouping on a variable with many values is also possible. In this case, we can see
+summary statistics on every single duration as an example.
+dmerge4.groupby([pd.Grouper(freq='M',key='startdate'),'duration_f']).sum()[:5]
+We can be very specific and the level of granularity can be very detailed. We can pinpoint
+the average duration for a very specific profile or demographic which can be very
+powerful for a data-driven decision making including marketing or civic infrastructure
+goals for the bike sharing system.
+
+This next table gives an indication of monthly durations based on starting landmark and
+endstation. In other words, we get an idea of how long it takes to reach by bicycle and the
+differences between customers and subscribers all in one table. We can identify which
+customers are keeping the bicycles for longer periods of time.
+np.round(dmerge4.groupby([pd.Grouper(freq='M',key='startdate'),"landmark","subsc\
+riptiontype","endstation"])[['duration_f']].mean())
+np.round(dmerge4.groupby([pd.Grouper(freq='M',key='startdate')
+,"landmark","subscriptiontype","endstation"])[['duration_f']].mean())
+Let's look at the breakdown of average duration by both landmark and subscription
+type.
+We can see some clear differences between customers and subscribers. In most cases,
+subscribers are taking short trips.
+np.round(dmerge4.groupby([pd.Grouper(freq='M',key='startdate'),"landmark","subsc\
+riptiontype"])[['duration_f']].mean()).unstack()
+
+Let's look at each level of duration on an hourly basis.
+dmerge4.groupby([pd.Grouper(freq='H',key='startdate'),'duration_f']).mean().head()
+In this table, we are looking at hourly data by landmark.
+hourlytry = dmerge4.groupby([pd.Grouper(freq='H',key='startdate'),'landmark'],as\
+_index=False)[['duration_f']].mean()
+hourlytry
+
+Group operations on a datetime index
+dmerge4.groupby(dmerge4.index.month).agg(['count','sum','mean','min','max'])[['d\
+uration_f']]
+Let's make a table of average dockcount by each precipitation level and subscription
+type.
+i = pd.DataFrame(dmerge4.groupby(['precipitation_in','subscriptiontype']).dockco\
+unt.mean()).reset_index()
+i
+
+What are the total number of observations in each of the initial six months?
+Other than first month of operation, the distribution of observations distribution is pretty
+evenly spread out.
+dmerge4.groupby(dmerge4.index.month).size()
+1     24428
+2     19024
+8      2102
+9     25243
+10    29105
+11    24219
+12    19894
+dtype: int64
+dmerge4.groupby(dmerge4.index.month).size().order(ascending=False)[:5]
+10    29105
+9     25243
+1     24428
+11    24219
+12    19894
+dtype: int64
+Working with multi-level indexes
+Let's create a multi-level index without grouping.
+We'll often want to perform queries on the full dataset.
+dmerge4twolevels = dmerge4.set_index(['landmark','subscriptiontype'])
+dmerge4twolevels
+
+Creates a groupby object dataframe on which aggregate actions can be performed
+and can group by the multi-indexes.
+grouplevel0 = dmerge4twolevels.groupby(level=0)
+grouplevel0
+grouplevel0.mean()
+#same result as dmerge4.groupby('landmark').mean()
+grouplevel1 = dmerge4twolevels.groupby(level=1)
+grouplevel1
+grouplevel1.mean()
+The level can also be specified by name.
+dmerge4twolevels.groupby(level='subscriptiontype').sum()
+dmerge4twolevels.sum(level='subscriptiontype')  #same as above
+Create the level without dropping it as a column
+dmerge4twolevels.xs('Subscriber', level='subscriptiontype',drop_level=False)
+
+Querying data
+By setting up the initial query, We can then change the inputs for interactive reporting of
+results. We can answer very specific questions by querying.
+Let's created a grouped object, apply aggregate functions, and then query the data.
+In this table, we have the average duration for subscription type of customer only.
+grouped1 = dmerge4.groupby(['landmark','subscriptiontype'])
+group2 = grouped1[['duration']].agg([np.mean, np.std])
+group2
+query1 = group2.query('subscriptiontype == "Customer"')
+query1
+Return a dataset from a multi-index dataframe that contains only startterminal
+number 62.
+#subseting and indexing a non-grouped multi index:
+dmerge4twolevels.query('startterminal == 62')
+
+Query a multi-index dataframe for subscriptiontype of subscriber.
+dmerge4twolevels.query('subscriptiontype == "Subscriber"')
+What is the average duration in descending order by endstation when the
+startterminal is number 62?
+We can get this type of granular data by querying. By setting up the initial query, we can
+then change the inputs for interactive reporting of results.
+duration62 = dmerge4twolevels.query('startterminal == 62').groupby('endstation')\
+['duration_f'].mean().order(ascending=False)
+duration62
+endstation
+2nd at Folsom                                    84.510405
+Beale at Market                                  28.968750
+Civic Center BART (7th at Market)                25.788571
+Embarcadero at Vallejo                           22.056000
+Powell at Post (Union Square)                    21.702200
+Embarcadero at Sansome                           20.633906
+Mechanics Plaza (Market at Battery)              18.325526
+Golden Gate at Polk                              18.093333
+San Francisco Caltrain (Townsend at 4th)         17.642372
+South Van Ness at Market                         16.725909
+Commercial at Montgomery                         15.988511
+Market at 10th                                   15.887500
+Townsend at 7th                                  15.233402
+Grant Avenue at Columbus Avenue                  15.224000
+San Francisco City Hall                          14.389286
+Davis at Jackson                                 11.523784
+Broadway St at Battery St                        11.013333
+Washington at Kearney                            10.850811
+Harry Bridges Plaza (Ferry Building)             10.394581
+
+5th at Howard                                     9.919462
+Powell Street BART                                9.627881
+Clay at Battery                                   9.399346
+Post at Kearney                                   8.780957
+Steuart at Market                                 8.627549
+Embarcadero at Bryant                             8.034000
+Yerba Buena Center of the Arts (3rd @ Howard)     7.567119
+Market at 4th                                     7.431879
+San Francisco Caltrain 2 (330 Townsend)           7.380276
+Embarcadero at Folsom                             5.832000
+Temporary Transbay Terminal (Howard at Beale)     5.819636
+Spear at Folsom                                   5.556141
+2nd at South Park                                 5.551429
+2nd at Townsend                                   4.662283
+Market at Sansome                                 4.334730
+Howard at 2nd                                     3.326883
+Name: duration_f, dtype: float64
+Merging and concatenating
+Let's concatenate the morning monthly and evening monthly created in the time series
+section into a dataframe for the plotting section.
+concatenated = pd.concat([morning_monthly,evening_monthly], keys=['morning', 'e\
+vening'],axis=1)
+concatenated
+Merge same named column from two datasets but keep both columns but rename them
+with a suffix
+merge = pd.merge(morning_monthly,evening_monthly,how='outer',left_index=True,\ r\
+ight_index=True,suffixes=['_morning', '_evening'])
+merge
+
+Ad-hoc data summary or string operations
+Use a lambda function to get summary statistics of average duration by landmark.
+The maximum average duration was in San Jose, the highest average duration was in Palo
+Alto and the lowest was in San Francisco.
+dmerge4.groupby("landmark")[['duration_f']].apply(lambda x: x.describe()).unstac\
+k()
+Another use of the lambda function is to map a function.
+For example sake, to check the length of a string.
+#apply a lambda function
+f = lambda x: len(str(x))
+dmerge4[['landmark']].applymap(f)[:3]
+Here is another string operation by way of mapping a lambda function. Very useful.
+dmerge4['endstation'].map(lambda x: x.startswith('Grant')).head()
+startdate
+2013-08-29 15:11:00    False
+2013-08-29 17:35:00    False
+
+2013-08-29 20:00:00    False
+2013-08-29 17:30:00    False
+2013-08-29 19:07:00    False
+Name: endstation, dtype: bool
+Make a grouped object without making it the index.
+dmerge4.groupby('landmark', as_index=False).mean() 
+
+Data Science Programming in Python - Visualization
+Data visualization
+Let's make some visualizations as part of the iterative process of data munging,
+aggregating, and visualizing. Visualizations help us understand the data better. At best,
+exploratory data visualization inspires questions and informs our analysis while
+identifying trends and patterns to further learn from the data.
+We will see that displaying similar information in a variety of ways and using different
+types and styles of plots can reveal even more about the data.
+%matplotlib inline
+import numpy as np
+import pandas as pd
+from datetime import datetime, time
+from ggplot import *
+import seaborn as sns
+print pd.__version__
+print np.__version__
+0.14.1
+1.9.0
+%load_ext ipycache
+Exploratory data visualization
+In practical data analysis, we want to make our plots in the most efficient and succinct
+way possible following an iterative data analysis process. A visualization will form more
+questions that lead to further visualizations using pandas, ggplot, and seaborn. In
+exploratory visualization, grouping & aggregating data and plotting are part of that
+iterative process. We want to learn from our data what further visualizations will provide
+insight and hopefully lead to more statistical questions and more visualizations.
+Mean temperature
+dmerge4.mean_temperature_f.plot()
+
+
+Plotting time-series data
+Daily average duration for the first six months of operation of the bike sharing system
+In this plot, we can see that most trips were under sixty minutes and fluctuated for the
+most part between under twenty minutes up to around fifty minutes depending on the time
+of day.
+print (ggplot(aes(x='startdate', y='duration_i'), data=daily_means) + \
+geom_line()) + geom_smooth()
+
+Daily average mean temperature
+Since San Francisco doesn't have typically harsh winters, temperature did not seem to
+have much effect on length of bicycle trips
+print (ggplot(aes(x='startdate', y='mean_temperature_f'), data=daily_means) + \
+geom_line())
+
+Mean temperatures for the entire dataset
+This plot is included here to compare the above graph with plotting the entire dataset.
+Taking the daily mean in the previous plots allows us to consolidate multiple observations
+on a single day to give a less noisy graph. In this graph, every single observation is
+plotted. Taking the daily mean is a way to see the trend more cleanly and also will allow
+for further analysis on a daily data.
+print (ggplot(aes(x='startdate', y='mean_temperature_f'), data=dmerge4) + \
+geom_line())
+
+Average duration on a monthly basis for the six month period
+The monthly duration takes away some of the noise indicated by the daily data. We do
+actually see a declining trend as we go from Autumn to Winter.
+print (ggplot(aes(x='startdate', y='duration_i'), data=monthly_means) + \
+geom_line())
+<br />
+Remember that we concatenated two time series intervals for the morning and evening
+commute. We can now see in this graph that the average duration by month is mostly
+higher in the evening than in the morning. Keeping in mind that August was the first
+month of operation, the plot also indicates that on average, the bicycle was returned to a
+dock within the initial thirty minute from start time from September to February.
+
+Average duration by month faceted by morning and evening commuting hours
+concatenated.plot()
+
+Average duration at 4pm for the six month period
+What's really nice about Pandas time series functionality is that we can also look at plots
+at specific times as well. Here is a plot of total duration at 4pm for the entire six month
+period. The plot indicates that a user had a bicycle for a really long time at 4pm in October
+but mostly the trip durations were under fifty minutes.
+#total duration at particular time
+dmerge4.duration_i.at_time(time(16, 0)).plot() 
+
+four_pm_df=pd.DataFrame(dmerge4.duration_f.at_time(time(16, 0))).reset_index()
+ggplot(four_pm_df,aes(x='startdate',y='duration_f')) + geom_line()
+#duration at 4pm for everyday the entire six month period
+
+Average duration by time of day
+Durations are shorter during the morning and evening commuting hours and slightly
+higher during the mid-day and at night. The data also indicates that people are keeping
+bicycles for a longer period of time after midnight until four am.
+dmerge4.groupby('timeofday')[['duration_i']].mean().plot(kind='bar')
+
+Dodged bar plot of average duration by landmark and time of day
+This plot gives a really nice visual of average duration by landmark and time of day.
+Across the board, morning durations are shortest which would make sense for morning
+commuters. Morning commutes are highest in Palo Alto. Perhaps there is more traffic or
+greater distances to travel. In addition, we know that there are fewer bicycle docks in Palo
+Alto. Mid-day start times have longer trip duration except for Mountain View where
+evening bicycle trips are the longest.
+Duration in San Francisco is the shortest and this is also the area that the highest number
+of docks in the dataset as shown in the grouping and aggregating section of the analysis.
+sns.factorplot("landmark", "duration_f", "timeofday", data=timelandmark);
+
+Dockcounts by landmark and duration
+It is evident in this plot that dockcounts were lowest in Palo Alto where average durations
+were also the highest.
+sns.factorplot("landmark", "duration_f", "dockcount", data=timelandmark,palette=\
+"BuPu_d")
+
+Average duration by landmark faceted by timeofday
+This plot is nice because it allows us to visually see the differences in duration by
+landmark by categorical time of day.
+sns.factorplot("landmark","duration_f", data=timelandmark, row="timeofday",
+margin_titles=True, aspect=3, size=2,palette="BuPu_d");
+
+Average duration for each landmark faceted by month
+Palo Alto had highest duration in almost every month except for February when Mountain
+View had the highest average duration.
+sns.factorplot("landmark","duration_f", data=dmerge4, row="month",
+margin_titles=True, aspect=3, size=2,palette="Pastel1");
+
+
+Plot of mean, minimum, and maximum temperature by month
+This plot indicates plots for mean,minimum,and maximum summary statistics
+dmerge4.groupby(dmerge4.index.month)
+['max_temperature_f'].agg(['mean','min','max']).plot()
+
+Mean and minimum duration by hour of the day
+Duration is lowest in the morning and evening commute hours and highest in the evening
+and wee hours.
+dmerge4.groupby(dmerge4.index.hour)['duration_f'].agg(['mean','min']).plot()
+
+What are the average durations by day of the month?
+day_means['duration_f'].plot(kind='bar')
+
+In what month did the highest duration occur and what was the subscription type?
+The highest duration occurred in December for a subscription type of customer in
+Redwood City
+dmerge4.groupby([pd.Grouper(freq='M',key='startdate'),"landmark",\
+"subscriptiontype"])[['duration_f']].mean().unstack().unstack().plot(colormap='g\
+ist_rainbow')
+
+Dodged bar plots by month of average duration by landmark and subscription type
+In December, January, and February, the highest average duration was for a customer in
+Redwood City.
+three_grouper_unstack_twice = 
+dmerge4.groupby([pd.Grouper(freq='M',key='startdate'),"landmark",\
+"subscriptiontype"])[['duration']].mean().unstack().unstack()
+three_grouper_unstack_twice.plot(kind="barh",colormap='gist_rainbow')
+
+Monthly average duration by landmark
+From September until December, Palo Alto had the highest average duration by month
+while San Jose and San Francisco had the lowest. Average duration by month increased in
+Redwood City from September to February.
+grouperl = dmerge4.groupby([pd.Grouper(freq='M',key='startdate'),\
+'landmark']).mean()[['duration_f']]
+grouperl.unstack().plot()
+
+Dodged bar plot of monthly average duration by landmark
+This dodged barplot shows that duration was highest for Redwood City in February and
+highest for Palo Alto in November. In every month, durations were lowest for both San
+Francisco and San Jose. We could hypothesize this is due to commuting, traffic patterns,
+and demand for bicycles. In any case, knowing where durations are higher will influence
+demand and dockcount.
+grouperl.unstack().plot(kind="bar")
+
+Average monthly duration faceted by time of day
+grouperm = dmerge4.groupby([pd.Grouper(freq='M',key='startdate'),'timeofday'])\
+.mean()[['duration_f']]
+grouperm.unstack().plot(kind="bar")
+
+Average duration by landmark
+dmerge4.groupby("landmark").mean()[['duration_f']].plot(kind='bar')
+
+Average duration by hour of the day for the entire six month period
+ggplot(dmerge4, aes('hour', 'duration_f',color='landmark')) + geom_point(stat="i\
+dentity")
+
+Boxplot of monthly average duration by landmark
+Subscribers for the most part are below sixty minute durations while customers have
+higher durations and the widest range of duration in Redwood City followed by Mountain
+View.
+three_grouper = dmerge4.groupby([pd.Grouper(freq='M',key='startdate'),"landmark"\
+,"subscriptiontype"])[['duration_f']].mean().reset_index()
+import seaborn as sns
+sns.factorplot("landmark", "duration_f", "subscriptiontype", three_grouper,\
+kind="box",palette="PRGn", aspect=2.25)
+
+Distribution of mean temperature
+It doesn't get too warm or too cold in Northern California between August and February.
+dmerge4['mean_temperature_f'].value_counts().sort_index().plot(kind='bar') 
+
+Average duration and standard deviation for subscription type of Customer by landmark
+Bar plot of average duration by landmark and subscription type. In this case, we only
+wanted to compare duration by one type of customer.
+dmerge4.groupby(['landmark','subscriptiontype'])[['duration_f']].agg([np.mean, n\
+p.std]).query('subscriptiontype == "Customer"').plot(kind="bar")
+Note, this is the exact same plot as above except that the unstacking does not affect the
+result because we specified the subscription type value.
+dmerge4.groupby(['landmark','subscriptiontype'])[['duration_f']].agg([np.mean, n\
+p.std]).query('subscriptiontype == "Customer"').unstack().plot(kind="barh")
+
+
+Average duration by subscription type
+Looking at the mean duration by subscription type shows that subscribers are on average
+within the thirty minutes while 'customers' often exceed that time period. Remember that
+seventy-nine percent of total observations in the dataset are subscribers. Subscribers have
+an annual membership while customers are defined as either twenty-four hour or three day
+pass.
+dmerge4.groupby(['landmark','subscriptiontype'])['duration_f'].mean().unstack(\
+).plot(kind="bar")
+
+Plot that indicates the differences in average duration between subscribers and customers by landmark
+We love this plot. It gives a very clear idea of the differences in average duration between
+customers and subscribers with dodged plots by landmark.
+dmerge4.groupby(['subscriptiontype','landmark'])['duration_f'].mean().unstack().\
+plot(kind="bar")
+
+Number of observations in the dataset by landmark and subscription type
+The plot above reveals really interesting insights when compared to this plot of the
+number of subscribers versus the number of customers in the bikesharing system in the
+first six months of operation. This plot indicates that the majority of bike trips were taken
+by subscribers in San Francisco. The previous plot indicated that they had the shortest
+duration time. Looking at these plots together tells a story.
+dmerge4.groupby(['subscriptiontype', 'landmark']).size().unstack().plot(kind='ba\
+rh')
+
+Daily average duration by landmark for the six month period
+The highest daily average duration occurred in December in Palo Alto.
+dmerge4.groupby([pd.Grouper(freq='D',key='startdate'),'landmark'])[['duration_f'\
+]].mean().unstack().plot()
+
+What is the most common end station when a bicyclist starts at the Powell Street BART?
+The most common end station when a bicyclist starts at the Powell Street BART is the
+University and Emerson.
+dmerge4twolevels.query('startterminal == 53').groupby('endstation')['duration_f'\
+].mean().plot(kind='barh')
+
+Plot duration and dockcount by subscription type
+grouplevel1 = dmerge4twolevels.groupby(level=1)
+grouplevel1.mean()[['duration_f','dockcount']].plot(kind='bar')
+When working with a mulit-level index, this is one way of accessing a particular level.
+dmerge4twolevels.groupby(level=['landmark']).mean()['duration_f']\
+.plot(kind="bar")
+
+Plot the average duration for trips that were thirty minutes and under versus trips over thirty minutes
+dmerge4.groupby('thirtymin')[['duration_f']].mean().plot(kind='bar')
+
+Average duration for trips thirty minutes and under compared to trips over thirty minutes faceted by time of day
+dmerge4.groupby(['thirtymin','timeofday'])[['duration_f']].mean().unstack().plot\
+(kind="bar")
+
+Histogram of duration of trips thirty minutes and less
+dmerge4.query('thirtymin == "in_thirty"')[['duration_f']].hist()
+
+Number of observations for each duration of thirty minutes and under
+It's very interesting that the majority of rides thirty minutes and less are between five and
+10 minutes! So, perhaps the system is mainly used for short commutes as intended rather
+than for recreational purpose. We have seen this to be the case for rides originating in San
+Francisco where the majority of trips began and docks are located.
+dmerge4.query('thirtymin == "in_thirty"').groupby('duration_f').size().plot()
+dmerge4.query('thirtymin == "in_thirty"')[['duration_f']].hist()
+
+Hourly average duration for the six month period
+hourly2 =  dmerge4.groupby([pd.Grouper(freq='H',key='startdate'),'landmark'],\
+as_index=False).mean()
+ggplot(hourly2, aes('startdate', 'duration',color='landmark')) + geom_line()
+
+What days of the week are bicycles being used for the longest average duration by landmark?
+It's nice to see the differences by landmark. For instance, it appears that durations are
+higher in Palo Alto near the end of the month.
+#mean duration by day of the week
+dmerge4.groupby(['day','landmark']).aggregate(np.mean)[['duration']].unstack()\
+.plot()
+
+What hour of the day has the longest duration by landmark?
+Redwood City in the eleven pm hour has the longest average duration.
+#mean duration by hour of the day
+dmerge4.groupby(['hour','landmark']).aggregate(np.mean)[['duration_f']].\
+unstack().plot(kind='barh')
+
+Average duration by hour of the day faceted by subscriber type
+For every hour of the day, Customers have longer average duration than Subscribers
+especially in the wee hours.
+#mean duration by hour of the day faceted by subscriber type
+dmerge4.groupby(['hour','subscriptiontype']).aggregate(np.mean)[['duration']].un\
+stack().plot(kind='barh')
+
+Distribution of number of observations in the dataset by hour of the day
+There were more bicycle trips taken during the morning commute and the evening
+commute.
+hour_counts = dmerge4.groupby('hour').aggregate(np.size)
+hour_counts['duration_i'].plot(kind='bar')
+
+Distribution of total duration by hour of the day
+Total duration was highest from eight am to six pm which also corresponds to working
+hours.
+hour_sum = dmerge4.groupby('hour').aggregate(np.sum)
+hour_sum['duration_i'].plot(kind='bar')
+
+Average duration by hour of the day and subscription type.
+This plot indicates that subscriber trips were generally shorter while customer trips had
+higher durations
+from ggplot import *
+ggplot(aes(x='hour', y='duration_f',color='subscriptiontype'), data=dmerge4) + \
+geom_point(alpha=.6)
+
+Density plot of average duration by landmark
+ggplot(dmerge4, aes(x='duration', color='landmark')) + \
+geom_density() + xlim(0,20000)
+
+Duration by hour for both subscription types faceted by landmark
+ggplot(aes(x='hour', y='duration', colour='subscriptiontype'), data=dmerge4) + \
+geom_point() + facet_wrap("landmark")
+
+Monthly total duration by landmark.
+This plots illustrates that trips in San Francisco for the most part had shorter total
+durations while there were some outliers in Palo Alto.
+ggplot(aes(x='month', y='duration', color='landmark'), data=dmerge4) + \
+geom_point()
+
+Total duration by hour of day faceted by landmark
+This type of plot makes it easier to pinpoint outliers by time of day.
+ggplot(aes(x='hour', y='duration', color='landmark'), data=dmerge4) + \
+geom_point()
+
+Plot of duration by month faceted by subscription type
+sns.factorplot("month", "duration",data=dmerge4,hue="subscriptiontype",
+palette="PRGn", aspect=1.25)
+
+Plot of duration by landmark faceted by subscription type
+sns.factorplot("landmark", "duration",data=dmerge4,hue="subscriptiontype",
+palette="PRGn", aspect=1.25)
+
+Plot of total duration by landmark faceted by subscription type
+sns.factorplot("landmark", "duration", col="subscriptiontype",data=dmerge4, pale\
+tte="PuBu_d",size=4,aspect=1.5);
+
+Plot of average duration by landmark faceted by subscription type
+sns.factorplot("subscriptiontype", "duration_f", col="landmark", data=dmerge4, p\
+alette="PuBu_d",size=4,aspect=.5);
+
+The top five start stations
+dmerge4["startstation"].value_counts()[:10]
+San Francisco Caltrain (Townsend at 4th)         9838
+Harry Bridges Plaza (Ferry Building)             7343
+Embarcadero at Sansome                           6545
+Market at Sansome                                5922
+Temporary Transbay Terminal (Howard at Beale)    5113
+Market at 4th                                    5030
+2nd at Townsend                                  4987
+San Francisco Caltrain 2 (330 Townsend)          4976
+Steuart at Market                                4913
+Townsend at 7th                                  4493
+dtype: int64
+dmerge4["startstation"].value_counts()[:5].plot(kind="bar")
+
+Plot of the five lowest average durations by start station
+dmerge4.groupby('startstation').duration_f.mean().order(ascending=True)[:5].plot\
+(kind='barh')
+
+Plot of the total duration by landmark faceted by subscriber type
+dmerge4.groupby(['landmark','subscriptiontype']).agg({'duration_f' : np.sum}).un\
+stack().plot(kind="bar")
+
+Scatter plot with a smoothing line
+This plot shows that the average dock count has a decreasing trend as mean temperature
+increases
+ggplot(h, aes(x = 'mean_temperature_f', y ='dockcount')) + geom_point() + geom_s\
+mooth(method = 'lm') 
+
+Data Science Programming in Python - Time Series
+Working with time-series data
+Time-series data is fun and interesting. Working with time-series data has already been
+covered extensively in the data munging and grouping & aggregating sections. This
+chapter aims to cover ad-hoc time-series topics relevant for data analysis. The time- series
+plots produced by the datasets in these chapters is presented in the visualization section.
+We have implemented and shown varying strategies for working with datetime data to
+gain meaning and insight from the dataset. Now, we'll go a little further in depth into
+looking at specific dates and times, categorical time intervals, timedeltas, and general
+properties of datetime and timestamp data.
+We can see data analytics over longer periods of time or dates, at a specific time or date, or
+even just in a particular time interval. In part, this particular dataset has several nice
+properties and it was chosen to illustrate working with time-series data.
+Preliminary work with getting date and time data into a nice format for data analysis has
+been covered in the data munging section. Now, let's take a deeper look at working with
+time-series data to gain meaning and insight from our bike sharing dataset.
+import numpy as np
+import pandas as pd
+from datetime import datetime, time
+%matplotlib inline
+import seaborn as sns
+from ggplot import *
+print pd.__version__
+print np.__version__
+0.14.1
+1.9.0
+%load_ext ipycache
+Resampling
+Resampling allows us to resample to different time periods and show summary statistics.
+Resample the dataset to daily means so each row will have the average means for trips
+started on the same day
+Daily means.
+daily_means = dmerge4.resample('D', how='mean').reset_index(drop=False) 
+daily_means.head(2)
+Resample dataset to monthly means so each row will have the average means for trips
+started in the same month
+Monthly Means.
+
+monthly_means =  dmerge4.resample('M', how='mean').reset_index(drop=False) 
+monthly_means.head(2)
+Working with time data
+The timeseries functionality in pandas allows granularity down to the second, minute, or
+hour. For instance, one can look at average duration at four pm on a monthly basis and
+compare it to eight am. However, it may be more instructive to look at a range such as a
+time interval like rush hour and the morning commute.
+Average duration at eight am and four pm resampled to monthly mean.
+#the datetime index at 8am resampled to monthly
+eight_am = dmerge4.at_time(time(8,0)).resample('M', how='mean')[['duration_f']]
+eight_am
+four_pm = dmerge4.at_time(time(16,0)).resample('M', how='mean')[['duration_f']]
+four_pm
+In every month, duration at four pm is higher than at eight am. When looking at a range of
+times such as the monthly morning duration and the monthly evening duration, the
+differences are less delineated. This is interesting because knowing at what hour or range
+of times bicycles will not be available based on duration is useful for demand and
+infrastructure planning. Also, this information can inform marketing strategies. Perhaps,
+
+there are incentives that can be given to change duration times now that we know more
+based on the time-series data.
+Look at average duration between 5am and 10am on a monthly basis.
+morning_monthly = dmerge4.between_time(time(5, 0), time(10, 0)).resample('M', ho\
+w='mean')[['duration_f']]
+morning_monthly
+Summary statistics for morning time interval.
+dmerge4.between_time(time(5, 0), time(10, 0)).describe()
+Look at average duration between three pm and seven pm on a monthly basis.
+evening_monthly = dmerge4.between_time(time(15, 0), time(19, 0)).resample('M', h\
+ow='mean')[['duration_f']]
+evening_monthly
+
+Summary statistics for evening time interval which was chosen to encompass the
+'rush hour' time period.
+dmerge4.between_time(time(15, 0), time(19, 0)).describe()
+So, by slicing and dicing the datetime object into morning and evening commuting hours,
+we've learned that there are 47,592 observations in the evening ; 38,885 in the morning ;
+86,477 in this combined time period out of the total, and 10% more observations in the
+evening than in the morning.
+Categorical time intervals
+When we munged the data, we created a categorical field for time intervals by extracting
+the hour component of the time stamp which will be useful for grouping, aggregating, and
+plotting based on the labelled ranges.
+Here is a table of average duration by time of day category.
+dmerge4.groupby('timeofday')[['duration_f']].mean()
+The results are very interesting. We were curious as to why the data suggested that trips
+were primarily shorter rides. Splitting the data into labelled time of day intervals reveals
+some interesting insights. Perhaps evening and morning rides are commutes while non-
+rush hour times of day are closer to the thirty minute time limit for each trip. But,why is
+the average duration longer in the wee hours? In the group and aggregation portion of the
+analysis, we run further queries by time of day to learn more.
+Understanding timedeltas
+The column we created named diff takes the difference between the datetime objects of
+end date and start date
+dmerge4['diff'].head()
+
+startdate
+2013-08-29 15:11:00   00:03:00
+2013-08-29 17:35:00   00:13:00
+2013-08-29 20:00:00   00:04:00
+2013-08-29 17:30:00   00:03:00
+2013-08-29 19:07:00   00:14:00
+Name: diff, dtype: timedelta64[ns]
+This will extract minutes from the datetime object column named diff. Also note that this
+will be different than using hour, minute, extracted columns because those are based on
+start date only.
+np.round((dmerge4['diff']/ np.timedelta64(1, 'm') % 60))
+startdate
+2013-08-29 15:11:00     3
+2013-08-29 17:35:00    13
+2013-08-29 20:00:00     4
+2013-08-29 17:30:00     3
+2013-08-29 19:07:00    14
+2013-08-29 12:33:00    14
+2013-08-29 19:01:00    13
+2013-08-29 19:11:00    25
+2013-08-29 14:14:00     6
+2013-08-29 19:13:00    23
+2013-08-29 19:08:00    13
+2013-08-29 19:01:00    14
+2013-08-29 13:57:00     2
+2013-08-29 09:08:00     3
+2013-08-29 14:04:00    28
+...
+2014-02-28 09:45:00    15
+2014-02-28 18:34:00    16
+2014-02-28 08:28:00     9
+2014-02-28 13:07:00    12
+2014-02-28 17:03:00     5
+2014-02-28 16:44:00     5
+2014-02-28 10:05:00     9
+2014-02-28 09:50:00    10
+2014-02-28 16:19:00     5
+2014-02-28 19:13:00     6
+2014-02-28 18:48:00     4
+2014-02-28 07:42:00     2
+2014-02-28 18:13:00     6
+2014-02-28 17:20:00     5
+2014-02-28 13:22:00     6
+Name: diff, Length: 144015
+This returns the minutes component of the timestamp which is not what we want rather
+than total minutes which is what we want for this analysis. We mention it here because
+this can be useful for when working with financial time-series data in particular.
+np.round((dmerge4['diff']/ np.timedelta64(1, 'm') % 60)).max()
+59.0
+By looking at the hour component, notice that most of the trips were under one hour.
+deltahour = np.round((dmerge4['diff']/ np.timedelta64(1, 'h')))
+deltahour
+startdate
+2013-08-29 15:11:00    0
+2013-08-29 17:35:00    0
+2013-08-29 20:00:00    0
+2013-08-29 17:30:00    0
+2013-08-29 19:07:00    0
+2013-08-29 12:33:00    0
+2013-08-29 19:01:00    0
+2013-08-29 19:11:00    0
+2013-08-29 14:14:00    0
+2013-08-29 19:13:00    0
+2013-08-29 19:08:00    0
+2013-08-29 19:01:00    0
+2013-08-29 13:57:00    0
+
+2013-08-29 09:08:00    0
+2013-08-29 14:04:00    0
+...
+2014-02-28 09:45:00    0
+2014-02-28 18:34:00    0
+2014-02-28 08:28:00    0
+2014-02-28 13:07:00    0
+2014-02-28 17:03:00    0
+2014-02-28 16:44:00    0
+2014-02-28 10:05:00    0
+2014-02-28 09:50:00    0
+2014-02-28 16:19:00    0
+2014-02-28 19:13:00    0
+2014-02-28 18:48:00    0
+2014-02-28 07:42:00    0
+2014-02-28 18:13:00    0
+2014-02-28 17:20:00    0
+2014-02-28 13:22:00    0
+Name: diff, Length: 144015
+This will give the what we want in minutes rather than just extracting the minutes element.
+dmerge4['diff'].apply(lambda x: x / np.timedelta64(1, 'm'))
+startdate
+2013-08-29 15:11:00     3
+2013-08-29 17:35:00    13
+2013-08-29 20:00:00     4
+2013-08-29 17:30:00     3
+2013-08-29 19:07:00    14
+2013-08-29 12:33:00    14
+2013-08-29 19:01:00    13
+2013-08-29 19:11:00    25
+2013-08-29 14:14:00     6
+2013-08-29 19:13:00    23
+2013-08-29 19:08:00    13
+2013-08-29 19:01:00    14
+2013-08-29 13:57:00     2
+2013-08-29 09:08:00     3
+2013-08-29 14:04:00    28
+...
+2014-02-28 09:45:00    15
+2014-02-28 18:34:00    16
+2014-02-28 08:28:00     9
+2014-02-28 13:07:00    12
+2014-02-28 17:03:00     5
+2014-02-28 16:44:00     5
+2014-02-28 10:05:00     9
+2014-02-28 09:50:00    10
+2014-02-28 16:19:00     5
+2014-02-28 19:13:00     6
+2014-02-28 18:48:00     4
+2014-02-28 07:42:00     2
+2014-02-28 18:13:00     6
+2014-02-28 17:20:00     5
+2014-02-28 13:22:00     6
+Name: diff, Length: 144015
+The max function shows that total minutes rather than just the minute component is
+returned. Success.
+dmerge4['diff'].apply(lambda x: x / np.timedelta64(1, 'm')).max()
+12037.0
+The will give the same result without a lambda function
+np.round((dmerge4['diff']/ np.timedelta64(1, 'm'))).max()
+12037.0
+dmerge4['diff'].apply(lambda x: x / np.timedelta64(1, 'm')).plot()
+<matplotlib.axes._subplots.AxesSubplot at 0x7fe640261e10>
+
+One thing to keep in mind is that pandas uses numpy datetime while there is also a
+datetime.datetime in python. This is something to keep in mind for general python users.
+The latest release of pandas also introduces a new datetime accessor for working with
+dates and times and is worth checking out.
+
+Afterword
+What are the next steps? This is just the beginning. Continue practicing the techniques
+learned in this book on your own datasets. Repetition and practice are the keys to
+understanding and skill. You are now on your way to analyzing data with code. Remember
+to keep learning and always have fun.
+
